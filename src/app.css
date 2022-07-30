@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-media --xs (width > 300px);
+@custom-media --sm (width > 600px);
+@custom-media --md (width > 900px);
+@custom-media --lg (width > 1200px);
+@custom-media --xl (width > 1600px);
+
+:root {
+	--max-width: 1100px;
+	--contain-padding: 1.2rem;
+	--menu-width: 250px;
+	--gap: 2rem;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+body {
+	font-family: 'Ubuntu', sans-serif;
+	line-height: 1.1;
+}
+
+p {
+	margin-bottom: 1em;
+}
+
+.btn:is(button, a):is(.outline, .filled) {
+	padding-block: 0.625em !important;
+}
