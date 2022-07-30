@@ -45,7 +45,7 @@
     bottom: 0;
     background-color: white;
     width: 100%;
-    padding: 0.6rem --contain-padding;
+    padding: 0.5rem --contain-padding;
     @media (--sm) {
       top: 0;
       border-top: none;
