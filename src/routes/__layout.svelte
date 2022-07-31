@@ -1,11 +1,8 @@
 <script>
+  import { currentRoute } from '../scripts/routes';
   import Header from './_Header.svelte';
   import Menu from './_Menu.svelte';
-  import '@fontsource/ubuntu/400.css';
-  import '@fontsource/ubuntu/500.css';
-  import '@fontsource/ubuntu/700.css';
   import '../app.css';
-  import { currentRoute } from '../scripts/routes';
 </script>
 
 <svelte:head>
@@ -23,12 +20,6 @@
 </main>
 
 <style>
-  .contain {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
   main {
     max-width: --max-width;
     margin-inline: auto;
