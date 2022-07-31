@@ -1,18 +1,22 @@
 const config = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	theme: {
-		extend: {},
-		screens: {
-			xs: '300px',
-			sm: '600px',
-			md: '900px',
-			lg: '1200px',
-			xl: '1600px',
-		},
-	},
+  theme: {
+    extend: {},
+    screens: {
+      xs: '300px',
+      sm: '600px',
+      md: '900px',
+      lg: '1200px',
+      xl: '1600px',
+    },
+  },
 
-	plugins: [],
+  plugins: [],
+
+  corePlugins: {
+    outlineStyle: false,
+  },
 };
 
 module.exports = config;
