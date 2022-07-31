@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import trpc, { type Fetch, type QueryOutput } from '$lib/client/trpc';
-  import { ShoppingListStatus } from '@prisma/client';
   import type { Load } from '@sveltejs/kit';
 
   export const load: Load = async ({ fetch }) => {
@@ -15,7 +14,7 @@
 
 <ul>
   {#each listItems as item}
-    <li class:archived={item.status === ShoppingListStatus.ARCHIVED}>
+    <li class:archived={!item.active}>
       {item.name}
       {#if item.notes.length > 0}, {item.notes} {/if}
     </li>
