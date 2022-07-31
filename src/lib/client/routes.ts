@@ -9,18 +9,18 @@ import TaskComplete from 'carbon-icons-svelte/lib/TaskComplete.svelte';
 import Data from 'carbon-icons-svelte/lib/Data_1.svelte';
 
 export const routes = [
-	{ path: '', name: 'Overzicht', title: 'Theehuis', icon: Dashboard },
-	{ path: 'boodschappen', name: 'Boodschappen', title: 'Boodschappen', icon: ShoppingCart },
-	{ path: 'uitgaven', name: 'Uitgaven', title: 'Uitgaven', icon: Money },
-	{ path: 'klusjes', name: 'Klusjes', title: 'Klusjes', icon: TaskComplete },
-	{ path: 'recepten', name: 'Recepten', title: 'Recepten', icon: FruitBowl },
-	{ path: 'instellingen', name: 'Instellingen', title: 'Instellingen', icon: Data },
+  { path: 'overzicht', name: 'Overzicht', title: 'Theehuis', icon: Dashboard },
+  { path: 'boodschappen', name: 'Boodschappen', title: 'Boodschappen', icon: ShoppingCart },
+  { path: 'uitgaven', name: 'Uitgaven', title: 'Uitgaven', icon: Money },
+  { path: 'klusjes', name: 'Klusjes', title: 'Klusjes', icon: TaskComplete },
+  { path: 'recepten', name: 'Recepten', title: 'Recepten', icon: FruitBowl },
+  { path: 'instellingen', name: 'Instellingen', title: 'Instellingen', icon: Data },
 ];
 
 export const getRoute = (routeId: string | null) => {
-	const filter = routes.filter((route) => routeId === route.path);
-	if (filter.length > 0) return filter[0];
-	else return null;
+  const filter = routes.filter((route) => routeId === route.path);
+  if (filter.length > 0) return filter[0];
+  else return null;
 };
 
 export const currentPath = derived(page, ($page) => $page.routeId);

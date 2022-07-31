@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
   import trpc, { type Fetch, type QueryOutput } from '$lib/client/trpc';
-  import type { Load } from '@sveltejs/kit';
+  import { protect } from '$lib/util/protect';
 
-  export const load: Load = async ({ fetch }) => {
+  export const load = protect(async ({ fetch }) => {
     const listItems = await trpc(fetch as Fetch).query('shop:list');
     return { props: { listItems } };
-  };
+  });
 </script>
 
 <script lang="ts">

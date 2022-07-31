@@ -1,20 +1,23 @@
-<script>
-  import { currentRoute } from '../scripts/routes';
-  import Header from './_Header.svelte';
-  import Menu from './_Menu.svelte';
+<script lang="ts">
+  import { currentRoute } from '$lib/client/routes';
+  import { loggedIn } from '$lib/client/stores';
+  import Header from '$lib/components/Header.svelte';
+  import Menu from '$lib/components/Menu.svelte';
   import '../app.css';
 </script>
 
 <svelte:head>
-  <title>{$currentRoute?.name} ∙ Theehuis</title>
+  {#if $currentRoute?.name}<title>{$currentRoute?.name} ∙ Theehuis</title>{/if}
 </svelte:head>
 
 <Header />
 <main>
-  <nav>
-    <Menu />
-  </nav>
-  <section>
+  {#if $loggedIn}
+    <nav>
+      <Menu />
+    </nav>
+  {/if}
+  <section class:loggedIn={$loggedIn}>
     <slot />
   </section>
 </main>
@@ -50,8 +53,13 @@
     width: 100%;
     padding: 6rem --contain-padding;
     @media (--sm) {
-      padding-left: calc(--contain-padding + --gap + --menu-width);
       padding-block: 6rem 2rem;
+    }
+  }
+
+  section.loggedIn {
+    @media (--sm) {
+      padding-left: calc(--contain-padding + --gap + --menu-width);
     }
   }
 </style>

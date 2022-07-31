@@ -1,7 +1,10 @@
 import * as trpc from '@trpc/server';
 import prisma from '../prismaClient';
 import bcrypt from 'bcryptjs';
+import { JWT_SECRET } from '$env/static/private';
 import cookie from 'cookie';
+import jwt from 'jsonwebtoken';
+import z from 'zod';
 
 import { loginSchema, registerSchema } from '$lib/client/schema';
 import type { createContext } from '.';
@@ -23,13 +26,23 @@ export default trpc
   })
   .mutation('login', {
     input: loginSchema,
-    resolve: async ({ input, ctx }) => {
-      const user = await prisma.user.findUnique({ where: { email: input.email } });
+    resolve: async ({ input }) => {
+      const user = await prisma.user.findUnique({
+        where: { email: input.email },
+      });
 
       const passwordMatch = user && (await bcrypt.compare(input.password, user.passwordHash));
 
       if (!user || !passwordMatch) return { success: false, error: 'Onjuist e-mailadres of wachtwoord.' };
 
-      return { success: true, user };
+      const publicUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+
+      const token = jwt.sign(publicUser, JWT_SECRET);
+
+      return { success: true, user: publicUser, token };
     },
   });

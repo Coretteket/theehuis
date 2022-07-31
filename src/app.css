@@ -35,11 +35,20 @@ body {
   line-height: 1.1;
 }
 
+h2 {
+  color: #920075;
+}
+
 p {
   margin-bottom: 1em;
 }
 
-.btn:is(button, a):is(.outline, .filled) {
+a {
+  text-decoration: underline;
+  color: rgb(71, 71, 163);
+}
+
+.btn:is(button, a):not(.\!p-0, .wide) {
   padding-block: 0.625em !important;
 }
 

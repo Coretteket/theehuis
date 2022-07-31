@@ -5,7 +5,9 @@ import shop from './shop';
 import auth from './auth';
 import type { RequestEvent } from '@sveltejs/kit';
 
-export const createContext = async ({ request }: RequestEvent) => ({ request });
+export const createContext = async ({ request }: RequestEvent) => {
+  return { request };
+};
 
 export const router = trpc
   .router<inferAsyncReturnType<typeof createContext>>()

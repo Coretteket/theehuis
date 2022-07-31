@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from 'attractions';
-  import { useMediaQuery } from '../scripts/media-query';
-  import { routes, isRoute } from '../scripts/routes';
+  import { useMediaQuery } from '$lib/util/media-query';
+  import { routes, isRoute } from '$lib/client/routes';
 
   let isMobile = useMediaQuery('(max-width: 900px)');
 </script>
@@ -9,7 +9,7 @@
 <ul>
   {#each routes as route}
     <li>
-      <Button href="/{route.path}" round={$isMobile} selected={$isRoute(route.path)}>
+      <Button href="/{route.path}" round={$isMobile} selected={$isRoute(route.path)} class="wide">
         <svelte:component this={route.icon} size={$isMobile ? 22 : 18} />
         <span>{route.name}</span>
       </Button>
