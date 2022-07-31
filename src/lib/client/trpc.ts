@@ -3,8 +3,9 @@ import type { Router } from '$lib/server/trpc';
 import * as trpc from '@trpc/client';
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 import trpcTransformer from 'trpc-transformer';
+import { PUBLIC_VERCEL } from '$env/static/public';
 
-const url = browser ? '/trpc' : 'http://localhost:5173/trpc';
+const url = browser ? '/trpc' : PUBLIC_VERCEL == '1' ? 'https://theehuis.qntn.xyz/trpc' : 'http://localhost:4173/trpc';
 
 export default (loadFetch?: typeof fetch) =>
   trpc.createTRPCClient<Router>({
