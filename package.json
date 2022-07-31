@@ -10,8 +10,7 @@
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. .",
 		"format": "prettier --write --plugin-search-dir=. .",
-		"vercel-postbuild": "cp node_modules/@prisma/engines/*query* .vercel_build_output/functions/node/render/;cp prisma/schema.prisma .vercel_build_output/functions/node/render/",
-		"vercel-build": "prisma generate && pnpm build && pnpm vercel-postbuild"
+		"vercel-build": "prisma generate && pnpm build"
 	},
 	"devDependencies": {
 		"@felte/validator-zod": "^1.0.10",
