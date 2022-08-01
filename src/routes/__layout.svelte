@@ -1,18 +1,10 @@
 <script lang="ts">
-  import { afterNavigate, beforeNavigate } from '$app/navigation';
-
   import { currentRoute } from '$lib/client/routes';
   import { loggedIn } from '$lib/client/stores';
   import Header from '$lib/components/Header.svelte';
   import Menu from '$lib/components/Menu.svelte';
   import Snackbar from '$lib/components/Snackbar.svelte';
-  import Loading from '$lib/components/Loading.svelte';
   import '../app.css';
-
-  let loading = false;
-
-  beforeNavigate(() => (loading = true));
-  afterNavigate(() => (loading = false));
 </script>
 
 <svelte:head>
@@ -27,11 +19,7 @@
     </nav>
   {/if}
   <section class:loggedIn={$loggedIn}>
-    {#if loading}
-      <Loading />
-    {:else}
-      <slot />
-    {/if}
+    <slot />
   </section>
 </main>
 
