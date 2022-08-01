@@ -3,6 +3,7 @@
   import { loggedIn } from '$lib/client/stores';
   import Header from '$lib/components/Header.svelte';
   import Menu from '$lib/components/Menu.svelte';
+  import Snackbar from '$lib/components/Snackbar.svelte';
   import '../app.css';
 </script>
 
@@ -21,6 +22,8 @@
     <slot />
   </section>
 </main>
+
+<Snackbar />
 
 <style>
   main {

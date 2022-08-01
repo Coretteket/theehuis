@@ -21,8 +21,8 @@
       {#if $loggedIn}
         <ProfileButton />
       {:else}
-        <Button href="/registreren" class="!p-0 mr-4 !hidden sm:!block">
-          <span class="px-4 my-3">Registreren</span>
+        <Button href="/registreren" class="!p-0 mr-4 !hidden sm:!flex">
+          <span class="px-5 my-3">Registreren</span>
         </Button>
 
         <Button selected href="/inloggen" class="!p-0">

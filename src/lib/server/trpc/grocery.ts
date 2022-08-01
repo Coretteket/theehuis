@@ -3,7 +3,7 @@ import prisma from '../prismaClient';
 
 export default trpc.router().query('list', {
   resolve: () =>
-    prisma.shoppingList.findMany({
+    prisma.grocery.findMany({
       orderBy: [{ createdAt: 'desc' }],
     }),
 });

@@ -5,14 +5,20 @@ import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 import trpcTransformer from 'trpc-transformer';
 import { PUBLIC_VERCEL } from '$env/static/public';
 
-const url = browser ? '/trpc' : PUBLIC_VERCEL == '1' ? 'https://theehuis.qntn.xyz/trpc' : 'http://localhost:4173/trpc';
+const url =
+  PUBLIC_VERCEL == '1'
+    ? 'https://theehuis.qntn.xyz/trpc'
+    : import.meta.env.MODE == 'development'
+    ? 'http://localhost:5173/trpc'
+    : 'http://localhost:4173/trpc';
 
-export default (loadFetch?: typeof fetch) =>
-  trpc.createTRPCClient<Router>({
-    url: loadFetch ? '/trpc' : url,
+export default (loadFetch?: typeof fetch) => {
+  return trpc.createTRPCClient<Router>({
+    url: loadFetch || browser ? '/trpc' : url,
     transformer: trpcTransformer,
     ...(loadFetch && { fetch: loadFetch }),
   });
+};
 
 export type Queries = Router['_def']['queries'];
 export type Query = keyof Queries;

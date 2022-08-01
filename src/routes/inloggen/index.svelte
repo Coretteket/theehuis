@@ -19,15 +19,20 @@
   const { form, errors } = createForm({
     onSubmit: async (values) => {
       const response = await post('/inloggen/api', values);
-      if (response.status === 200) {
+      if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
         if (data.success) {
           $session.user = data.user;
           goto('/overzicht');
+        } else if (data.error) {
+          throw Error(data.error);
         }
         console.log(data.user);
+      } else {
+        throw Error('Er is iets misgegaan. Probeer het opnieuw.');
       }
     },
+    onError: (error) => ({ password: (error as Error).message }),
     extend: validator({ schema: loginSchema }),
   });
 </script>

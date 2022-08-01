@@ -9,6 +9,15 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+model House {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String
+  inhabitants User[]
+  groceries   Grocery[]
+}
+
 model User {
   id           String   @id @default(cuid())
   createdAt    DateTime @default(now())
@@ -16,13 +25,18 @@ model User {
   email        String   @unique
   passwordHash String
   name         String
+  admin        Boolean  @default(false)
+  house        House?   @relation(fields: [houseId], references: [id])
+  houseId      String?
 }
 
-model ShoppingList {
+model Grocery {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
   notes     String
   active    Boolean  @default(true)
+  house     House?   @relation(fields: [houseId], references: [id])
+  houseId   String?
 }

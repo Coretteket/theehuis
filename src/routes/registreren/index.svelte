@@ -13,12 +13,21 @@
   import { registerSchema } from '$lib/client/schema';
   import trpc from '$lib/client/trpc';
   import { goto } from '$app/navigation';
+  import { showSnackbar } from '$lib/client/stores';
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
-      const response = await trpc().mutation('auth:register', values);
-      goto('/inloggen');
+      const data = await trpc().mutation('auth:register', values);
+      if (data.success) {
+        $showSnackbar({
+          text: 'Account succesvol aangemaakt, je kunt nu inloggen.',
+        });
+        goto('/inloggen');
+      } else if (data.error) {
+        throw Error(data.error);
+      }
     },
+    onError: (error) => ({ email: (error as Error).message }),
     extend: validator({ schema: registerSchema }),
   });
 </script>

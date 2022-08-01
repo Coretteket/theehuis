@@ -10,7 +10,9 @@ const config = {
       stage: 0,
       importFrom: './src/app.css',
       // TODO: stay alert to future importFrom deprecation
-      features: { 'custom-properties': { disableDeprecationNotice: true } },
+      features: {
+        'custom-properties': { disableDeprecationNotice: true },
+      },
     }),
     //Some plugins, like tailwindcss/nesting, need to run before Tailwind,
     tailwindcss(),

@@ -8,16 +8,16 @@
 
   const openSettings = (toggle: () => void) => goto('/instellingen').then(toggle);
 
-  const logOut = async (toggle: () => void) => {
-    const response = await post('/uitloggen/api');
+  const logOut = (toggle: () => void) => {
     $session.user = null;
-    goto('/inloggen').then(toggle);
+    post('/uitloggen/api').then(toggle);
+    goto('/inloggen');
   };
 </script>
 
 <DropdownShell let:toggle>
   <Button selected on:click={toggle} class="!p-0">
-    <span class="pl-4 pr-3 py-3">Quinten</span>
+    <span class="pl-4 pr-3 py-3">{$session.user.name}</span>
     <img
       src="https://avatars.githubusercontent.com/u/33397397?s=400&u=18e15c28ab6d432f44ca1f6398630ac20a5638c4&v=4"
       class="h-8 mr-1 rounded-3xl"

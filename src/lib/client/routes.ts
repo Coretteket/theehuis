@@ -9,12 +9,27 @@ import TaskComplete from 'carbon-icons-svelte/lib/TaskComplete.svelte';
 import Data from 'carbon-icons-svelte/lib/Data_1.svelte';
 
 export const routes = [
-  { path: 'overzicht', name: 'Overzicht', title: 'Theehuis', icon: Dashboard },
-  { path: 'boodschappen', name: 'Boodschappen', title: 'Boodschappen', icon: ShoppingCart },
+  {
+    path: 'overzicht',
+    name: 'Overzicht',
+    title: 'Theehuis',
+    icon: Dashboard,
+  },
+  {
+    path: 'boodschappen',
+    name: 'Boodschappen',
+    title: 'Boodschappen',
+    icon: ShoppingCart,
+  },
   { path: 'uitgaven', name: 'Uitgaven', title: 'Uitgaven', icon: Money },
   { path: 'klusjes', name: 'Klusjes', title: 'Klusjes', icon: TaskComplete },
   { path: 'recepten', name: 'Recepten', title: 'Recepten', icon: FruitBowl },
-  { path: 'instellingen', name: 'Instellingen', title: 'Instellingen', icon: Data },
+  {
+    path: 'instellingen',
+    name: 'Instellingen',
+    title: 'Instellingen',
+    icon: Data,
+  },
 ];
 
 export const getRoute = (routeId: string | null) => {
