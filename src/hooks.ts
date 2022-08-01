@@ -22,6 +22,7 @@ const _handle: Handle = async ({ event, resolve }) => {
   if (cookies.session)
     try {
       const jwtUser = jwt.verify(cookies.session, JWT_SECRET);
+      console.log(jwtUser);
       if (typeof jwtUser === 'string') throw Error('Invalid token');
       event.locals.user = await prisma.user.findUnique({
         select: { passwordHash: false },
