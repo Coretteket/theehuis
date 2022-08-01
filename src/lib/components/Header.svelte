@@ -1,12 +1,14 @@
 <script lang="ts">
   import Cafe from 'carbon-icons-svelte/lib/Cafe.svelte';
   import { currentRoute } from '$lib/client/routes';
-  import ProfileButton from './ProfileButton.svelte';
+  import Profile from './Profile.svelte';
   import { loggedIn } from '$lib/client/stores';
   import { Button } from 'attractions';
+  import Snackbar from './Snackbar.svelte';
 </script>
 
 <header>
+  <Snackbar />
   <div class="contain">
     <div class="left">
       <h1 class="!hidden sm:!flex sm:ml-3">
@@ -19,7 +21,7 @@
     </div>
     <div class="right">
       {#if $loggedIn}
-        <ProfileButton />
+        <Profile />
       {:else}
         <Button href="/registreren" class="!p-0 mr-4 !hidden sm:!flex">
           <span class="px-5 my-3">Registreren</span>

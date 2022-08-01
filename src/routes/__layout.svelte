@@ -5,7 +5,6 @@
   import { loading, loggedIn } from '$lib/client/stores';
   import Header from '$lib/components/Header.svelte';
   import Menu from '$lib/components/Menu.svelte';
-  import Snackbar from '$lib/components/Snackbar.svelte';
   import Loading from '$lib/components/Loading.svelte';
   import '../app.css';
 
@@ -34,8 +33,6 @@
     {/if}
   </section>
 </main>
-
-<Snackbar />
 
 <style>
   main {

@@ -19,9 +19,9 @@
   <Button selected on:click={toggle} class="!p-0">
     <span class="pl-4 pr-3 py-3">{$session.user.name}</span>
     <img
-      src="https://avatars.githubusercontent.com/u/33397397?s=400&u=18e15c28ab6d432f44ca1f6398630ac20a5638c4&v=4"
+      src={$session.user.gravatar ?? 'https://www.gravatar.com/avatar/?d=mp'}
       class="h-8 mr-1 rounded-3xl"
-      alt="Quinten"
+      alt={$session.user.name}
     />
   </Button>
   <Dropdown class="py-2 px-3" horizontalAlignment="end">

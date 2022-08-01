@@ -52,6 +52,15 @@ a {
   padding-block: 0.625em !important;
 }
 
+.snackbar-container .snackbar-stack {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.switch .track .thumb {
+  left: 0.1em !important;
+}
+
 @font-face {
   font-family: 'Ubuntu';
   src: url('/fonts/ubuntu-light.woff2') format('woff2');

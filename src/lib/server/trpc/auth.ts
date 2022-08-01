@@ -5,11 +5,10 @@ import { JWT_SECRET } from '$env/static/private';
 import jwt from 'jsonwebtoken';
 
 import { loginSchema, registerSchema } from '$lib/client/schema';
-import type { createContext } from '.';
-import type { inferAsyncReturnType } from '@trpc/server';
+import type { Context } from '.';
 
 export default trpc
-  .router<inferAsyncReturnType<typeof createContext>>()
+  .router<Context>()
   .mutation('register', {
     input: registerSchema,
     resolve: async ({ input }) => {
@@ -46,16 +45,15 @@ export default trpc
           error: 'Onjuist e-mailadres of wachtwoord.',
         };
 
-      const publicUser = {
+      const jwtUser = {
         id: user.id,
-        name: user.name,
         email: user.email,
         admin: user.admin,
         houseId: user.houseId,
       };
 
-      const token = jwt.sign(publicUser, JWT_SECRET);
+      const token = jwt.sign(jwtUser, JWT_SECRET);
 
-      return { success: true, user: publicUser, token };
+      return { success: true, user: jwtUser, token };
     },
   });

@@ -5,6 +5,7 @@ import { parse } from 'cookie';
 import { JWT_SECRET } from '$env/static/private';
 import jwt from 'jsonwebtoken';
 import { sequence } from '@sveltejs/kit/hooks';
+import prisma from './lib/server/prismaClient';
 
 const tRPCHandle: Handle = async ({ event, resolve }) =>
   await createTRPCHandle({
@@ -20,7 +21,12 @@ const _handle: Handle = async ({ event, resolve }) => {
 
   if (cookies.session)
     try {
-      event.locals.user = jwt.verify(cookies.session, JWT_SECRET);
+      const jwtUser = jwt.verify(cookies.session, JWT_SECRET);
+      if (typeof jwtUser === 'string') throw Error('Invalid token');
+      event.locals.user = await prisma.user.findUnique({
+        select: { passwordHash: false },
+        where: { id: jwtUser.id },
+      });
     } catch {
       console.log('Invalid token');
     }

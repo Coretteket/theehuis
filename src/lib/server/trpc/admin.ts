@@ -8,6 +8,7 @@ export default trpc.router().query('users', {
         id: true,
         name: true,
         email: true,
+        gravatar: true,
         house: { select: { name: true } },
       },
       orderBy: [{ createdAt: 'asc' }],

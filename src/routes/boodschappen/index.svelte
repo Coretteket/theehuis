@@ -3,8 +3,8 @@
   import { protect } from '$lib/util/protect';
   import trpc from '$lib/client/trpc';
 
-  export const load = protect(async ({ fetch, session }) => {
-    const listItems = await trpc(fetch as Fetch).query('grocery:list', session.user.houseId);
+  export const load = protect(async ({ fetch }) => {
+    const listItems = await trpc(fetch as Fetch).query('grocery:list');
     return { props: { listItems } };
   });
 </script>

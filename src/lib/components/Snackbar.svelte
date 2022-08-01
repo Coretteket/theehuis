@@ -1,6 +1,6 @@
 <script lang="ts">
   import { SnackbarContainer } from 'attractions';
-  import { snackbar } from '$lib/client/stores';
+  import { snackbar } from '$lib/client/snackbar';
 
   let snackbarContainer: SnackbarContainer;
   $: $snackbar = snackbarContainer;

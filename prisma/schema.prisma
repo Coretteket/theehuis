@@ -28,6 +28,7 @@ model User {
   admin        Boolean  @default(false)
   house        House?   @relation(fields: [houseId], references: [id])
   houseId      String?
+  gravatar     String?
 }
 
 model Grocery {

@@ -33,6 +33,7 @@ specifiers:
   tailwindcss: ^3.1.7
   trpc-sveltekit: ^2.2.1
   trpc-transformer: ^2.0.3
+  ts-md5: ^1.2.11
   tslib: ^2.4.0
   typescript: ^4.7.4
   vite: ^3.0.4
@@ -71,6 +72,7 @@ devDependencies:
   tailwindcss: 3.1.7
   trpc-sveltekit: 2.2.1_@trpc+server@9.26.2
   trpc-transformer: 2.0.3
+  ts-md5: 1.2.11
   tslib: 2.4.0
   typescript: 4.7.4
   vite: 3.0.4_sass@1.54.0
@@ -2773,6 +2775,10 @@ packages:
     dependencies:
       decimal.js: 10.3.1
       superjson: 1.9.1
+    dev: true
+
+  /ts-md5/1.2.11:
+    resolution: {integrity: sha512-vAwy9rEuRE6a8xa1MavIVkLFyyU0ydk4CLMFA5vOVccmQKLOuGb/BHm3oEN7XHf2FoqS+z0pSvhaad/ombd1Vg==}
     dev: true
 
   /tslib/2.4.0:

@@ -17,6 +17,7 @@
   import { goto } from '$app/navigation';
   import { loading } from '$lib/client/stores';
   import Loading from '$lib/components/Loading.svelte';
+  import trpc from '$lib/client/trpc';
 
   let loginLoading = false;
 
@@ -28,12 +29,12 @@
       if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
         if (data.success) {
-          $session.user = data.user;
+          const user = await trpc().query('user:get');
+          $session.user = { ...$session.user, ...user };
           goto('/overzicht');
         } else if (data.error) {
           throw Error(data.error);
         }
-        console.log(data.user);
       } else {
         throw Error('Er is iets misgegaan. Probeer het opnieuw.');
       }
