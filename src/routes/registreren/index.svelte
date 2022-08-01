@@ -12,9 +12,9 @@
   import { validator } from '@felte/validator-zod';
   import { registerSchema } from '$lib/client/schema';
   import trpc from '$lib/client/trpc';
-  import { showSnackbar } from "$lib/client/snackbar";
-showSnackbar } from '$lib/client/stores';
+  import { showSnackbar } from '$lib/client/snackbar';
   import Loading from '$lib/components/Loading.svelte';
+  import { goto } from '$app/navigation';
 
   let registerLoading = false;
 
