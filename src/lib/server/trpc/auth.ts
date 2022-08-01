@@ -51,6 +51,7 @@ export default trpc
         name: user.name,
         email: user.email,
         admin: user.admin,
+        houseId: user.houseId,
       };
 
       const token = jwt.sign(publicUser, JWT_SECRET);

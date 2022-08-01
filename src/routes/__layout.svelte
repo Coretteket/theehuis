@@ -13,8 +13,6 @@
 
   beforeNavigate(() => (loading = true));
   afterNavigate(() => (loading = false));
-
-  $: console.log(loading);
 </script>
 
 <svelte:head>

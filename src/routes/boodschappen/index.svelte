@@ -3,27 +3,28 @@
   import { protect } from '$lib/util/protect';
   import trpc from '$lib/client/trpc';
 
-  export const load = protect(async ({ fetch }) => {
-    const listItems = await trpc(fetch as Fetch).query('grocery:list');
-    return {
-      cache: { maxage: 300 },
-      props: { listItems },
-    };
-  });
+  export const load = protect();
 </script>
 
 <script lang="ts">
-  export let listItems: QueryOutput<'grocery:list'>;
+  import { session } from '$app/stores';
+  import Loading from '$lib/components/Loading.svelte';
+
+  let list = trpc().query('grocery:list', $session.user.houseId);
 </script>
 
-<ul>
-  {#each listItems as item}
-    <li class:archived={!item.active}>
-      {item.name}
-      {#if item.notes.length > 0}, {item.notes} {/if}
-    </li>
-  {/each}
-</ul>
+{#await list}
+  <Loading />
+{:then listItems}
+  <ul>
+    {#each listItems as item}
+      <li class:archived={!item.active}>
+        {item.name}
+        {#if item.notes.length > 0}, {item.notes} {/if}
+      </li>
+    {/each}
+  </ul>
+{/await}
 
 <style>
   ul {
