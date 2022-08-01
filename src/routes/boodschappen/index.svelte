@@ -1,27 +1,26 @@
 <script context="module" lang="ts">
+  import type { Fetch, QueryOutput } from '$lib/client/trpc';
   import { protect } from '$lib/util/protect';
-  export const load = protect();
+  import trpc from '$lib/client/trpc';
+
+  export const load = protect(async ({ fetch }) => {
+    const listItems = await trpc(fetch as Fetch).query('grocery:list');
+    return { props: { listItems } };
+  });
 </script>
 
 <script lang="ts">
-  import { Loading } from 'attractions';
-  import trpc from '$lib/client/trpc';
-
-  let list = trpc().query('grocery:list');
+  export let listItems: QueryOutput<'grocery:list'>;
 </script>
 
-{#await list}
-  <Loading />
-{:then listItems}
-  <ul>
-    {#each listItems as item}
-      <li class:archived={!item.active}>
-        {item.name}
-        {#if item.notes.length > 0}, {item.notes} {/if}
-      </li>
-    {/each}
-  </ul>
-{/await}
+<ul>
+  {#each listItems as item}
+    <li class:archived={!item.active}>
+      {item.name}
+      {#if item.notes.length > 0}, {item.notes} {/if}
+    </li>
+  {/each}
+</ul>
 
 <style>
   ul {

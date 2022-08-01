@@ -1,29 +1,28 @@
 <script context="module" lang="ts">
-  import trpc, { type QueryOutput } from '$lib/client/trpc';
+  import type { Fetch, QueryOutput } from '$lib/client/trpc';
   import { protect } from '$lib/util/protect';
+  import trpc from '$lib/client/trpc';
 
-  export const load = protect();
+  export const load = protect(async ({ session, fetch }) => {
+    if (!session.user?.admin) return {};
+    const users = await trpc(fetch as Fetch).query('admin:users');
+    return { props: { users } };
+  });
 </script>
 
 <script lang="ts">
-  import { session } from '$app/stores';
-  import { Card, Loading } from 'attractions';
+  import { Card } from 'attractions';
 
-  let users: Promise<QueryOutput<'admin:users'>>;
-  if ($session.user?.admin) users = trpc().query('admin:users');
+  export let users: QueryOutput<'admin:users'>;
 </script>
 
-{#if $session.user?.admin}
-  {#await users}
-    <Loading />
-  {:then usersList}
-    <h2 class="text-lg mb-2">Admin</h2>
-    <Card>
-      <ul>
-        {#each usersList as user}
-          <li>{user.name} ({user.email}), {user.house?.name}</li>
-        {/each}
-      </ul>
-    </Card>
-  {/await}
+{#if users}
+  <h2 class="text-lg mb-2">Admin</h2>
+  <Card>
+    <ul>
+      {#each users as user}
+        <li>{user.name} ({user.email}), {user.house?.name}</li>
+      {/each}
+    </ul>
+  </Card>
 {/if}
