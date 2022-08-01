@@ -5,7 +5,10 @@
 
   export const load = protect(async ({ fetch }) => {
     const listItems = await trpc(fetch as Fetch).query('grocery:list');
-    return { props: { listItems } };
+    return {
+      cache: { maxage: 300 },
+      props: { listItems },
+    };
   });
 </script>
 

@@ -6,7 +6,10 @@
   export const load = protect(async ({ session, fetch }) => {
     if (!session.user?.admin) return {};
     const users = await trpc(fetch as Fetch).query('admin:users');
-    return { props: { users } };
+    return {
+      cache: { maxage: 300 },
+      props: { users },
+    };
   });
 </script>
 
