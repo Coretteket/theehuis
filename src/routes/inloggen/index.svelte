@@ -15,7 +15,6 @@
   import { session } from '$app/stores';
   import type { MutationOutput } from '$lib/client/trpc';
   import { goto } from '$app/navigation';
-  import { loading } from '$lib/client/stores';
   import Loading from '$lib/components/Loading.svelte';
   import trpc from '$lib/client/trpc';
 
