@@ -14,10 +14,15 @@
   import trpc from '$lib/client/trpc';
   import { goto } from '$app/navigation';
   import { showSnackbar } from '$lib/client/stores';
+  import Loading from '$lib/components/Loading.svelte';
+
+  let registerLoading = false;
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
+      registerLoading = true;
       const data = await trpc().mutation('auth:register', values);
+      registerLoading = false;
       if (data.success) {
         $showSnackbar({
           text: 'Account succesvol aangemaakt, je kunt nu inloggen.',
@@ -43,7 +48,11 @@
   <TextField outline label="Voornaam" type="test" name="name" error={$errors.name} />
   <TextField outline label="E-mailadres" type="email" name="email" error={$errors.email} />
   <TextField outline label="Wachtwoord" type="password" name="password" error={$errors.password} />
-  <Button outline type="submit" class="float-right">Registreer</Button>
+  {#if registerLoading}
+    <div class="float-right mr-5"><Loading /></div>
+  {:else}
+    <Button outline type="submit" class="float-right">Registreer</Button>
+  {/if}
 </form>
 
 <style>

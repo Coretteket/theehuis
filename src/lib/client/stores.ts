@@ -2,6 +2,8 @@ import { derived, writable } from 'svelte/store';
 import { session } from '$app/stores';
 import type { SnackbarContainer } from 'attractions';
 
+export const loading = writable(false);
+
 export const loggedIn = derived(session, ($session) => !!$session.user);
 
 export const snackbar = writable<SnackbarContainer>();

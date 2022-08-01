@@ -6,6 +6,7 @@ export default trpc.router().query('list', {
   input: z.string().nullable(),
   resolve: ({ input }) =>
     prisma.grocery.findMany({
+      select: { id: true, name: true, notes: true, active: true },
       orderBy: [{ createdAt: 'desc' }],
       where: { houseId: input },
     }),

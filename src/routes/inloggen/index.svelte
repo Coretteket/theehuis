@@ -15,10 +15,16 @@
   import { session } from '$app/stores';
   import type { MutationOutput } from '$lib/client/trpc';
   import { goto } from '$app/navigation';
+  import { loading } from '$lib/client/stores';
+  import Loading from '$lib/components/Loading.svelte';
+
+  let loginLoading = false;
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
+      loginLoading = true;
       const response = await post('/inloggen/api', values);
+      loginLoading = false;
       if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
         if (data.success) {
@@ -47,7 +53,11 @@
 <form class="my-7" use:form>
   <TextField outline label="E-mailadres" type="email" name="email" error={$errors.email} />
   <TextField outline label="Wachtwoord" type="password" name="password" error={$errors.password} />
-  <Button outline type="submit" class="float-right">Log in</Button>
+  {#if loginLoading}
+    <div class="float-right mr-5"><Loading /></div>
+  {:else}
+    <Button outline type="submit" class="float-right">Log in</Button>
+  {/if}
 </form>
 
 <style>
