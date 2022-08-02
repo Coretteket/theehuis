@@ -1,7 +1,7 @@
 import * as trpc from '@trpc/server';
 import prisma from '../prismaClient';
 import bcrypt from 'bcryptjs';
-import { JWT_SECRET, RECAPTCHA_SECRET_KEY } from '$env/static/private';
+import { JWT_SECRET, RECAPTCHA_SECRET_KEY, DISABLE_RECAPTCHA } from '$env/static/private';
 import jwt from 'jsonwebtoken';
 
 import { loginSchema, registerSchema } from '$lib/client/schema';
@@ -9,6 +9,8 @@ import type { Context } from '.';
 import { z } from 'zod';
 
 const useRecaptcha = async (recaptchaToken: string) => {
+  if (DISABLE_RECAPTCHA === '1') return { success: true, score: 1.0 };
+
   const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
