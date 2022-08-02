@@ -21,9 +21,12 @@ const useRecaptcha = async (recaptchaToken: string) => {
 
   if (!response.ok) return { return: recaptchaError };
   const { success, score } = await response.json();
-  if (!success || score < 0.5) return { return: recaptchaError };
+  // if (!success || score < 0.5) return { return: recaptchaError };
 
-  return { success, score, return: recaptchaError };
+  if (!success) return { return: { success: false, error: 'Recaptcha fout' } };
+  if (score < 0.5) return { return: { success: false, error: 'Recaptcha score is niet goed' } };
+
+  return { success, score };
 };
 
 export default trpc
