@@ -17,14 +17,14 @@ const useRecaptcha = async (recaptchaToken: string) => {
     body: `secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
   });
 
-  const recaptchaError = { success: false, error: 'Er is iets misgegaan, probeer het opnieuw.' };
+  let error: string | null = null;
 
-  if (!response.ok) return { return: recaptchaError };
+  if (!response.ok) error = 'De reCAPTCHA-server was niet bereikbaar, probeer het later opnieuw.';
   const { success, score } = await response.json();
-  // if (!success || score < 0.5) return { return: recaptchaError };
 
-  if (!success) return { return: { success: false, error: 'Recaptcha fout' } };
-  if (score < 0.5) return { return: { success: false, error: 'Recaptcha score is niet goed' } };
+  if (!success) error = 'Er is iets misgegaan met reCAPTCHA, probeer het later opnieuw.';
+  if (score < 0.5) error = 'reCAPTCHA detecteerde mogelijke spaminteracties, probeer het later opnieuw.';
+  if (error) return { return: { success: false, error } };
 
   return { success, score };
 };
