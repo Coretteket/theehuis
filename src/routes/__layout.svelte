@@ -44,7 +44,7 @@
       <slot />
 
       <footer class="text-gray-400 text-sm mt-6">
-        Deze website maakt gebruik van reCAPTCHA voor het afvangen van spam.
+        Theehuis maakt gebruik van reCAPTCHA voor het afvangen van spam.
       </footer>
     {/if}
   </section>

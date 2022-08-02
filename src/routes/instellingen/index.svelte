@@ -6,9 +6,9 @@
   export const load = protect(async ({ session, fetch }) => {
     if (!session.user?.admin) return {};
 
-    const usersList = await trpc(fetch as Fetch).query('admin:users');
+    const adminUsersList = await trpc(fetch as Fetch).query('admin:users');
 
-    return { props: { usersList } };
+    return { props: { adminUsersList } };
   });
 </script>
 
@@ -17,7 +17,7 @@
   import { showSnackbar } from '$lib/client/snackbar';
   import { session } from '$app/stores';
 
-  export let usersList: QueryOutput<'admin:users'> | undefined;
+  export let adminUsersList: QueryOutput<'admin:users'> | undefined;
 
   let gravatarValue = !!$session.user?.gravatar;
 
@@ -29,11 +29,11 @@
   };
 </script>
 
-{#if usersList}
+{#if adminUsersList}
   <h2 class="text-lg font-medium mb-2">Admin</h2>
   <Card class="mb-8">
     <ul>
-      {#each usersList as user}
+      {#each adminUsersList as user}
         <li>
           <img
             src={user.gravatar ?? 'https://www.gravatar.com/avatar/?d=mp'}

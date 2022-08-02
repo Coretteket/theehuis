@@ -39,6 +39,12 @@ h2 {
   color: #920075;
 }
 
+h2,
+h3 {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
 p {
   margin-bottom: 1em;
 }
@@ -50,6 +56,10 @@ a {
 
 .btn:is(button, a):not(.\!p-0, .wide) {
   padding-block: 0.625em !important;
+}
+
+.btn:focus:not([disabled]):not(:hover) {
+  background: none !important;
 }
 
 .snackbar-container .snackbar-stack {

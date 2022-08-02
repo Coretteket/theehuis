@@ -1,100 +1,76 @@
 <script context="module" lang="ts">
+  import type { Fetch, QueryOutput } from '$lib/client/trpc';
   import { protect } from '$lib/util/protect';
-  export const load = protect();
+  import trpc from '$lib/client/trpc';
+
+  export const load = protect(async ({ session, fetch }) => {
+    const bulletins = await trpc(fetch as Fetch).query('bulletin:list');
+    const housemates = await trpc(fetch as Fetch).query('user:housemates');
+
+    return { props: { bulletins, housemates } };
+  });
 </script>
 
-<script>
-  import { Button } from 'attractions';
+<script lang="ts">
+  import { Card } from 'attractions';
+  import Bulletin from './_Bulletin.svelte';
+
+  export let bulletins: QueryOutput<'bulletin:list'>;
+  export let housemates: QueryOutput<'user:housemates'>;
 </script>
 
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum tincidunt nulla, condimentum consectetur
-  leo pulvinar id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eu
-  commodo ex, tempus dictum lectus. Quisque quis vulputate massa.
-</p>
-<p>
-  Praesent vitae gravida purus, sed pharetra orci. Proin vel tortor elit. Integer cursus mi nisl, ut consequat justo
-  dictum eget. Morbi dictum suscipit leo, et vehicula diam fringilla non. Sed scelerisque est vulputate maximus aliquet.
-  Cras imperdiet augue eros, ut tempor leo congue id.
-</p>
-<Button outline>Click me</Button>
+<h2 class="mb-3">Bulletin</h2>
+
+{#if bulletins}
+  <div class="bulletin-container flex gap-5 overflow-x-scroll">
+    {#each bulletins as bulletin}
+      <Bulletin {bulletin} />
+    {/each}
+  </div>
+{:else}
+  <p>Geen bulletins gevonden.</p>
+{/if}
+
+{#if housemates}
+  <h2 class="mb-3">Huisgenoten</h2>
+  <Card class="mb-8">
+    <ul>
+      {#each housemates as housemate (housemate.id)}
+        <li>
+          <img
+            src={housemate.gravatar ?? 'https://www.gravatar.com/avatar/?d=mp'}
+            class="h-8 mr-2 my-1 rounded-3xl inline-block"
+            alt={housemate.name}
+          />
+          {housemate.name}
+        </li>
+      {/each}
+    </ul>
+  </Card>
+{/if}
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  li {
+    width: 12rem;
+  }
+
+  .bulletin-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin: 0 calc(-1 * --contain-padding);
+    padding: 0.25em --contain-padding;
+    @media (--sm) {
+      margin-right: 0.25em;
+      padding-right: 0.25em;
+    }
+  }
+
+  .bulletin-container::-webkit-scrollbar {
+    display: none;
+  }
+</style>

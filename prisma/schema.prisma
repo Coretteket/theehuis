@@ -10,25 +10,55 @@ generator client {
 }
 
 model House {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  name        String
-  inhabitants User[]
-  groceries   Grocery[]
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  name          String
+  inhabitants   User[]
+  bulletins     Bulletin[]
+  notifications Notification[]
+  groceries     Grocery[]
 }
 
 model User {
-  id           String   @id @default(cuid())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  email        String   @unique
-  passwordHash String
-  name         String
-  admin        Boolean  @default(false)
-  house        House?   @relation(fields: [houseId], references: [id])
-  houseId      String?
-  gravatar     String?
+  id                String         @id @default(cuid())
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  email             String         @unique
+  passwordHash      String
+  name              String
+  admin             Boolean        @default(false)
+  house             House?         @relation(fields: [houseId], references: [id])
+  houseId           String?
+  gravatar          String?
+  bulletins         Bulletin[]
+  bulletinLikes     Bulletin[]     @relation("bulletinLikes")
+  notifications     Notification[]
+  notificationLikes Notification[] @relation("notificationLikes")
+}
+
+model Bulletin {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  house     House    @relation(fields: [houseId], references: [id])
+  houseId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  message   String   @db.Text()
+  likedBy   User[]   @relation("bulletinLikes")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  house     House    @relation(fields: [houseId], references: [id])
+  houseId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  message   String
+  likedBy   User[]   @relation("notificationLikes")
 }
 
 model Grocery {

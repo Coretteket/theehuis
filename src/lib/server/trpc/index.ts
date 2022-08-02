@@ -11,6 +11,7 @@ import { JWT_SECRET } from '$env/static/private';
 import settings from './settings';
 import type { User } from '@prisma/client';
 import user from './user';
+import bulletin from './bulletin';
 
 export const createContext = async ({ request }: RequestEvent) => {
   const token = cookie.parse(request.headers.get('cookie') ?? '').session;
@@ -34,6 +35,7 @@ export const router = trpc
   })
   .merge('user:', user)
   .merge('settings:', settings)
+  .merge('bulletin:', bulletin)
   .merge('grocery:', grocery)
   .middleware(({ ctx, next }) => {
     if (!ctx.user?.admin) throw new TRPCError({ code: 'UNAUTHORIZED' });
