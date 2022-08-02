@@ -61,6 +61,10 @@ a {
   left: 0.1em !important;
 }
 
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
 @font-face {
   font-family: 'Ubuntu';
   src: url('/fonts/ubuntu-light.woff2') format('woff2');

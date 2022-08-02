@@ -1,17 +1,39 @@
 import * as trpc from '@trpc/server';
 import prisma from '../prismaClient';
 import bcrypt from 'bcryptjs';
-import { JWT_SECRET } from '$env/static/private';
+import { JWT_SECRET, RECAPTCHA_SECRET_KEY } from '$env/static/private';
 import jwt from 'jsonwebtoken';
 
 import { loginSchema, registerSchema } from '$lib/client/schema';
 import type { Context } from '.';
+import { z } from 'zod';
+
+const useRecaptcha = async (recaptchaToken: string) => {
+  const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+  });
+
+  const recaptchaError = { success: false, error: 'Er is iets misgegaan, probeer het opnieuw.' };
+
+  if (!response.ok) return { return: recaptchaError };
+  const { success, score } = await response.json();
+  if (!success || score < 0.5) return { return: recaptchaError };
+
+  return { success, score, return: recaptchaError };
+};
 
 export default trpc
   .router<Context>()
   .mutation('register', {
-    input: registerSchema,
+    input: registerSchema.extend({
+      recaptchaToken: z.string(),
+    }),
     resolve: async ({ input }) => {
+      const recaptcha = await useRecaptcha(input.recaptchaToken);
+      if (recaptcha.return) return recaptcha.return;
+
       try {
         const response = await prisma.user.create({
           data: {
@@ -21,29 +43,27 @@ export default trpc
           },
           select: { id: true },
         });
-        return { success: true, ...response };
+        return { success: true, error: null, ...response };
       } catch (error) {
-        return {
-          success: false,
-          error: 'Een gebruiker met dit e-mailadres bestaat al.',
-        };
+        return { success: false, error: 'Een gebruiker met dit e-mailadres bestaat al.' };
       }
     },
   })
   .mutation('login', {
-    input: loginSchema,
+    input: loginSchema.extend({
+      recaptchaToken: z.string(),
+    }),
     resolve: async ({ input }) => {
+      const recaptcha = await useRecaptcha(input.recaptchaToken);
+      if (recaptcha.return) return { ...recaptcha.return, token: null };
+
       const user = await prisma.user.findUnique({
         where: { email: input.email },
       });
 
       const passwordMatch = user && (await bcrypt.compare(input.password, user.passwordHash));
 
-      if (!user || !passwordMatch)
-        return {
-          success: false,
-          error: 'Onjuist e-mailadres of wachtwoord.',
-        };
+      if (!user || !passwordMatch) return { success: false, error: 'Onjuist e-mailadres of wachtwoord.', token: null };
 
       const jwtUser = {
         id: user.id,
@@ -54,6 +74,6 @@ export default trpc
 
       const token = jwt.sign(jwtUser, JWT_SECRET);
 
-      return { success: true, user: jwtUser, token };
+      return { success: true, error: null, user: jwtUser, token };
     },
   });

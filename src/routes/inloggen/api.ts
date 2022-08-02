@@ -7,12 +7,11 @@ export const POST: RequestHandler = async ({ request }) => {
   const input = await request.json();
 
   const response = await trpc().mutation('auth:login', input);
-  const embedHeaders = response.success && response.token;
 
   return {
     status: 200,
     body: omitKey(response, 'token'),
-    ...(embedHeaders && {
+    ...(response.token && {
       headers: {
         'Set-Cookie': cookie.serialize('session', response.token, {
           path: '/',

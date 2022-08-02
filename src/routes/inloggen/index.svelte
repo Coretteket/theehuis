@@ -17,14 +17,17 @@
   import { goto } from '$app/navigation';
   import Loading from '$lib/components/Loading.svelte';
   import trpc from '$lib/client/trpc';
+  import { getRecaptchaToken } from '$lib/util/getRecaptchaToken';
 
   let loginLoading = false;
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
       loginLoading = true;
-      const response = await post('/inloggen/api', values);
+      const recaptchaToken = await getRecaptchaToken('login');
+      const response = await post('/inloggen/api', { ...values, recaptchaToken });
       loginLoading = false;
+
       if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
         if (data.success) {
@@ -54,9 +57,9 @@
   <TextField outline label="E-mailadres" type="email" name="email" error={$errors.email} />
   <TextField outline label="Wachtwoord" type="password" name="password" error={$errors.password} />
   {#if loginLoading}
-    <div class="float-right mr-5"><Loading /></div>
+    <div class="ml-auto mr-5 w-min"><Loading /></div>
   {:else}
-    <Button outline type="submit" class="float-right">Log in</Button>
+    <Button outline type="submit" class="ml-auto">Log in</Button>
   {/if}
 </form>
 

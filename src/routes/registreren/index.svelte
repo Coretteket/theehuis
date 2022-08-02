@@ -15,18 +15,18 @@
   import { showSnackbar } from '$lib/client/snackbar';
   import Loading from '$lib/components/Loading.svelte';
   import { goto } from '$app/navigation';
+  import { getRecaptchaToken } from '$lib/util/getRecaptchaToken';
 
   let registerLoading = false;
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
       registerLoading = true;
-      const data = await trpc().mutation('auth:register', values);
+      const recaptchaToken = await getRecaptchaToken('register');
+      const data = await trpc().mutation('auth:register', { ...values, recaptchaToken });
       registerLoading = false;
       if (data.success) {
-        $showSnackbar({
-          text: 'Account succesvol aangemaakt, je kunt nu inloggen.',
-        });
+        $showSnackbar({ text: 'Account succesvol aangemaakt, je kunt nu inloggen.' });
         goto('/inloggen');
       } else if (data.error) {
         throw Error(data.error);
@@ -49,9 +49,9 @@
   <TextField outline label="E-mailadres" type="email" name="email" error={$errors.email} />
   <TextField outline label="Wachtwoord" type="password" name="password" error={$errors.password} />
   {#if registerLoading}
-    <div class="float-right mr-5"><Loading /></div>
+    <div class="ml-auto mr-5 w-min"><Loading /></div>
   {:else}
-    <Button outline type="submit" class="float-right">Registreer</Button>
+    <Button outline type="submit" class="ml-auto">Registreer</Button>
   {/if}
 </form>
 

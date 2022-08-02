@@ -7,9 +7,21 @@
   import Menu from '$lib/components/Menu.svelte';
   import Loading from '$lib/components/Loading.svelte';
   import '../app.css';
+  import { onMount } from 'svelte';
+  import { browser } from '$app/env';
+  import { PUBLIC_RECAPTCHA_SITE_KEY } from '$env/static/public';
 
   beforeNavigate(() => loading.set(true));
   afterNavigate(() => loading.set(false));
+
+  onMount(() => {
+    if (browser) {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${PUBLIC_RECAPTCHA_SITE_KEY}`;
+      [script.async, script.defer] = [true, true];
+      document.head.appendChild(script);
+    }
+  });
 </script>
 
 <svelte:head>
@@ -30,6 +42,10 @@
       </div>
     {:else}
       <slot />
+
+      <footer class="text-gray-400 text-sm mt-6">
+        Deze website maakt gebruik van reCAPTCHA voor het afvangen van spam.
+      </footer>
     {/if}
   </section>
 </main>
@@ -65,7 +81,7 @@
     width: 100%;
     padding: 6rem --contain-padding;
     @media (--sm) {
-      padding-block: 6rem 2rem;
+      padding-block: 6rem 3rem;
     }
   }
 
