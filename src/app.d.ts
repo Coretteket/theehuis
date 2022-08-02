@@ -5,11 +5,11 @@
 // and what to do when importing types
 declare namespace App {
   interface Locals {
-    user: User;
+    user: Omit<User, 'passwordHash'> | null;
   }
   // interface Platform {}
   interface Session {
-    user: User;
+    user: Omit<User, 'passwordHash'> | null;
   }
   // interface Stuff {}
 }

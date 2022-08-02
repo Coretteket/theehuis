@@ -2,7 +2,7 @@
   import Cafe from 'carbon-icons-svelte/lib/Cafe.svelte';
   import { currentRoute } from '$lib/client/routes';
   import Profile from './Profile.svelte';
-  import { loggedIn } from '$lib/client/stores';
+  import { session } from '$app/stores';
   import { Button } from 'attractions';
   import Snackbar from './Snackbar.svelte';
 </script>
@@ -20,9 +20,8 @@
       </h1>
     </div>
     <div class="right">
-      {#if $loggedIn}
-        <Profile />
-      {:else}
+      <Profile />
+      {#if !$session.user}
         <Button href="/registreren" class="!p-0 mr-4 !hidden sm:!flex">
           <span class="px-5 my-3">Registreren</span>
         </Button>

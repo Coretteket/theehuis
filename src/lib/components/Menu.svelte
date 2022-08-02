@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from 'attractions';
-  import { useMediaQuery } from '$lib/util/media-query';
+  import { useMediaQuery } from '$lib/util/mediaQuery';
   import { routes, isRoute } from '$lib/client/routes';
 
   let isMobile = useMediaQuery('(max-width: 900px)');

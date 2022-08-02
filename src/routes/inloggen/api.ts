@@ -1,17 +1,18 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import trpc from '$lib/client/trpc';
 import cookie from 'cookie';
+import { omitKey } from '$lib/util/omitKey';
 
 export const POST: RequestHandler = async ({ request }) => {
   const input = await request.json();
 
   const response = await trpc().mutation('auth:login', input);
-  const headers = response.success && response.token;
+  const embedHeaders = response.success && response.token;
 
   return {
     status: 200,
-    body: response,
-    ...(headers && {
+    body: omitKey(response, 'token'),
+    ...(embedHeaders && {
       headers: {
         'Set-Cookie': cookie.serialize('session', response.token, {
           path: '/',

@@ -4,7 +4,7 @@
   import trpc from '$lib/client/trpc';
 
   export const load = protect(async ({ session, fetch }) => {
-    if (!session.user.admin) return {};
+    if (!session.user?.admin) return {};
 
     const usersList = await trpc(fetch as Fetch).query('admin:users');
 
@@ -19,16 +19,13 @@
 
   export let usersList: QueryOutput<'admin:users'> | undefined;
 
-  let gravatarValue = !!$session.user.gravatar;
+  let gravatarValue = !!$session.user?.gravatar;
 
   const handleGravatarChange = async ({ detail }: CustomEvent) => {
     const { gravatar } = await trpc().mutation('settings:gravatar', !!detail.value);
-    $session.user.gravatar = gravatar;
-    if (gravatar) {
-      $showSnackbar({ text: 'Gravatar succesvol ingeschakeld.' });
-    } else {
-      $showSnackbar({ text: 'Gravatar uitgeschakeld.' });
-    }
+    if ($session.user) $session.user.gravatar = gravatar;
+    if (gravatar) $showSnackbar({ text: 'Gravatar succesvol ingeschakeld.' });
+    else $showSnackbar({ text: 'Gravatar uitgeschakeld.' });
   };
 </script>
 
