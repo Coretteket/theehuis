@@ -72,7 +72,7 @@
   }
 
   p.constrain {
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
