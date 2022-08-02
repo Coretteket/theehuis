@@ -25,21 +25,23 @@ export default trpc
     resolve: async ({ ctx, input }) => {
       const likedResponse = await prisma.bulletin.findUnique({
         where: { id: input },
-        select: { likedBy: { select: { id: true } } },
+        select: { userId: true, likedBy: { select: { id: true } } },
       });
 
+      if (likedResponse?.userId === ctx.user?.id) return null;
+
       const filtered = likedResponse?.likedBy.filter((user) => user.id === ctx.user?.id);
-      const liked = filtered && filtered.length === 0;
+      const like = filtered && filtered.length === 0;
 
       const id = { id: ctx.user?.id };
-      const likedBy = liked ? { connect: id } : { disconnect: id };
+      const likedBy = like ? { connect: id } : { disconnect: id };
 
       const response = await prisma.bulletin.update({
         where: { id: input },
         data: { likedBy },
-        select: { id: true, likedBy: { orderBy: { updatedAt: 'asc' } } },
+        select: { id: true, likedBy: { select: { id: true, name: true, gravatar: true } } },
       });
 
-      return { liked, ...response };
+      return { liked: like, ...response };
     },
   });

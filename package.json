@@ -12,6 +12,9 @@
     "format": "prettier --write --ignore-path .prettierignore --plugin-search-dir=. .",
     "vercel-build": "prisma generate && pnpm build"
   },
+  "dependencies": {
+    "@egjs/svelte-conveyer": "^1.3.1"
+  },
   "devDependencies": {
     "@felte/validator-zod": "^1.0.10",
     "@fontsource/ubuntu": "^4.5.10",

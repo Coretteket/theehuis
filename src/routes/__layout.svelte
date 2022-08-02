@@ -3,8 +3,8 @@
 
   import { currentRoute } from '$lib/client/routes';
   import { loading, loggedIn } from '$lib/client/stores';
-  import Header from '$lib/components/Header.svelte';
-  import Menu from '$lib/components/Menu.svelte';
+  import Header from './layout/_Header.svelte';
+  import Menu from './layout/_Menu.svelte';
   import Loading from '$lib/components/Loading.svelte';
   import '../app.css';
   import { onMount } from 'svelte';
