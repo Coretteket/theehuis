@@ -21,7 +21,6 @@ specifiers:
   cssnano: ^5.1.12
   felte: ^1.2.2
   jsonwebtoken: ^8.5.1
-  kit-sw-workbox: ^1.0.2
   postcss: ^8.4.16
   postcss-load-config: ^4.0.1
   postcss-preset-env: ^7.7.2
@@ -41,9 +40,6 @@ specifiers:
   tslib: ^2.4.0
   typescript: ^4.7.4
   vite: ^3.0.4
-  workbox-precaching: ^6.5.4
-  workbox-routing: ^6.5.4
-  workbox-strategies: ^6.5.4
   zod: ^3.17.10
 
 devDependencies:
@@ -67,7 +63,6 @@ devDependencies:
   cssnano: 5.1.12_postcss@8.4.16
   felte: 1.2.2_svelte@3.49.0
   jsonwebtoken: 8.5.1
-  kit-sw-workbox: 1.0.2
   postcss: 8.4.16
   postcss-load-config: 4.0.1_postcss@8.4.16
   postcss-preset-env: 7.7.2_postcss@8.4.16
@@ -87,9 +82,6 @@ devDependencies:
   tslib: 2.4.0
   typescript: 4.7.4
   vite: 3.0.4_sass@1.54.3
-  workbox-precaching: 6.5.4
-  workbox-routing: 6.5.4
-  workbox-strategies: 6.5.4
   zod: 3.17.10
 
 packages:
@@ -1495,10 +1487,6 @@ packages:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
-    dev: true
-
-  /kit-sw-workbox/1.0.2:
-    resolution: {integrity: sha512-NOlJQFdmBpIhExfQSzv8vCS220CWFtSbnI2Xznu1Z3GfhXk3pmDHxaRsX53U3bvRAd+0qf6p8w0GJfxBCL9G5Q==}
     dev: true
 
   /kleur/4.1.5:
@@ -2995,30 +2983,6 @@ packages:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
       string-width: 4.2.3
-    dev: true
-
-  /workbox-core/6.5.4:
-    resolution: {integrity: sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==}
-    dev: true
-
-  /workbox-precaching/6.5.4:
-    resolution: {integrity: sha512-hSMezMsW6btKnxHB4bFy2Qfwey/8SYdGWvVIKFaUm8vJ4E53JAY+U2JwLTRD8wbLWoP6OVUdFlXsTdKu9yoLTg==}
-    dependencies:
-      workbox-core: 6.5.4
-      workbox-routing: 6.5.4
-      workbox-strategies: 6.5.4
-    dev: true
-
-  /workbox-routing/6.5.4:
-    resolution: {integrity: sha512-apQswLsbrrOsBUWtr9Lf80F+P1sHnQdYodRo32SjiByYi36IDyL2r7BH1lJtFX8fwNHDa1QOVY74WKLLS6o5Pg==}
-    dependencies:
-      workbox-core: 6.5.4
-    dev: true
-
-  /workbox-strategies/6.5.4:
-    resolution: {integrity: sha512-DEtsxhx0LIYWkJBTQolRxG4EI0setTJkqR4m7r4YpBdxtWJH1Mbg01Cj8ZjNOO8etqfA3IZaOPHUxCs8cBsKLw==}
-    dependencies:
-      workbox-core: 6.5.4
     dev: true
 
   /worktop/0.8.0-next.14:
