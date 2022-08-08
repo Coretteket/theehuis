@@ -7,15 +7,18 @@ export default trpc
   .router<Context>()
   .query('list', {
     resolve: async ({ ctx }) => {
+      if (!ctx.user?.houseId) return null;
+      const userData = { select: { id: true, name: true, gravatar: true } };
       return prisma.bulletin.findMany({
         select: {
           id: true,
           updatedAt: true,
-          user: { select: { id: true, name: true, gravatar: true } },
+          user: userData,
           title: true,
           message: true,
-          likedBy: { select: { id: true, name: true, gravatar: true } },
+          likedBy: userData,
         },
+        where: { houseId: ctx.user?.houseId },
         orderBy: [{ updatedAt: 'desc' }],
       });
     },

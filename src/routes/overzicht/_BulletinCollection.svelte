@@ -1,11 +1,13 @@
 <script lang="ts">
+  import { browser } from '$app/env';
+
   import type { QueryOutput } from '$lib/client/trpc';
   import { useConveyer } from '@egjs/svelte-conveyer/src/svelte-conveyer/index';
   import Bulletin from './_Bulletin.svelte';
 
   export let bulletins: QueryOutput<'bulletin:list'>;
 
-  const { ref } = useConveyer({ horizontal: true });
+  const drag = browser ? useConveyer({ horizontal: true }).ref : () => {};
 
   let grabbing = false;
 </script>
@@ -13,7 +15,7 @@
 {#if bulletins}
   <div
     class="flex gap-5 overflow-x-scroll cursor-grab"
-    use:ref
+    use:drag
     on:mousedown={() => (grabbing = true)}
     on:mouseup={() => (grabbing = false)}
     on:mouseleave={() => (grabbing = false)}

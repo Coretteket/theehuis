@@ -4,7 +4,8 @@
   import { Card, Dialog, Modal } from 'attractions';
   import { writable } from 'svelte/store';
   import BulletinContent from './_BulletinContent.svelte';
-  export let bulletin: QueryOutput<'bulletin:list'>[number];
+
+  export let bulletin: NonNullable<QueryOutput<'bulletin:list'>>[number];
 
   const bulletinStore = writable(bulletin);
 

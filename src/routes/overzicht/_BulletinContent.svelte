@@ -11,7 +11,7 @@
   import { session } from '$app/stores';
   import type { Writable } from 'svelte/store';
 
-  export let bulletin: Writable<QueryOutput<'bulletin:list'>[number]>;
+  export let bulletin: Writable<NonNullable<QueryOutput<'bulletin:list'>>[number]>;
   export let modal: boolean = false;
   export let launch = () => {};
 
