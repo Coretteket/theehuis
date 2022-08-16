@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageLoad } from '@sveltejs/kit';
+import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ session }) => {
-  if (session.user) throw redirect(302, '/overzicht');
+  if (session.user) throw redirect(307, '/overzicht');
 };

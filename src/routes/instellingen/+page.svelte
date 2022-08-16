@@ -1,27 +1,11 @@
-<script context="module" lang="ts">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import type { Fetch, QueryOutput } from '$lib/client/trpc';
-  // import { protect } from '$lib/util/protect';
-  // import trpc from '$lib/client/trpc';
-
-  // export const load = protect(async ({ session, fetch }) => {
-  //   if (!session.user?.admin) return {};
-
-  //   const adminUsersList = await trpc(fetch as Fetch).query('admin:users');
-
-  //   return { props: { adminUsersList } };
-  // });
-</script>
-
 <script lang="ts">
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   import { Card, Switch } from 'attractions';
   import { showSnackbar } from '$lib/client/snackbar';
   import { session } from '$app/stores';
+  import type { PageData } from './$types';
+  import trpc from '$lib/client/trpc';
 
-  export let adminUsersList: QueryOutput<'admin:users'> | undefined;
+  export let data: PageData;
 
   let gravatarValue = !!$session.user?.gravatar;
 
@@ -33,11 +17,11 @@
   };
 </script>
 
-{#if adminUsersList}
+{#if data?.adminUsersList}
   <h2 class="text-lg font-medium mb-2">Admin</h2>
   <Card class="mb-8">
     <ul>
-      {#each adminUsersList as user}
+      {#each data?.adminUsersList as user}
         <li>
           <img
             src={user.gravatar ?? 'https://www.gravatar.com/avatar/?d=mp'}

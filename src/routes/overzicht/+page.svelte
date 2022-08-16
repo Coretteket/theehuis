@@ -1,27 +1,13 @@
-<script context="module" lang="ts">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import type { Fetch, QueryOutput } from '$lib/client/trpc';
-  // import { protect } from '$lib/util/protect';
-  // import trpc from '$lib/client/trpc';
-
-  // export const load = protect(async ({ fetch }) => {
-  //   const bulletins = await trpc(fetch as Fetch).query('bulletin:list');
-  //   const housemates = await trpc(fetch as Fetch).query('user:housemates');
-
-  //   return { props: { bulletins, housemates } };
-  // });
-</script>
-
 <script lang="ts">
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   import { Card } from 'attractions';
   import BulletinCollection from './_BulletinCollection.svelte';
   import User from '$lib/components/User.svelte';
+  import type { PageData } from './$types';
 
-  export let bulletins: QueryOutput<'bulletin:list'>;
-  export let housemates: QueryOutput<'user:housemates'>;
+  export let data: PageData;
+
+  $: bulletins = data?.bulletins;
+  $: housemates = data?.housemates;
 </script>
 
 <h2 class="mb-3">Bulletin</h2>
