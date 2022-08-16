@@ -8,6 +8,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
   const response = await trpc().mutation('auth:login', input);
 
+  throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
   return {
     status: 200,
     body: omitKey(response, 'token'),

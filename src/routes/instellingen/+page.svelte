@@ -1,18 +1,22 @@
 <script context="module" lang="ts">
-  import type { Fetch, QueryOutput } from '$lib/client/trpc';
-  import { protect } from '$lib/util/protect';
-  import trpc from '$lib/client/trpc';
+  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
 
-  export const load = protect(async ({ session, fetch }) => {
-    if (!session.user?.admin) return {};
+  // import type { Fetch, QueryOutput } from '$lib/client/trpc';
+  // import { protect } from '$lib/util/protect';
+  // import trpc from '$lib/client/trpc';
 
-    const adminUsersList = await trpc(fetch as Fetch).query('admin:users');
+  // export const load = protect(async ({ session, fetch }) => {
+  //   if (!session.user?.admin) return {};
 
-    return { props: { adminUsersList } };
-  });
+  //   const adminUsersList = await trpc(fetch as Fetch).query('admin:users');
+
+  //   return { props: { adminUsersList } };
+  // });
 </script>
 
 <script lang="ts">
+  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
   import { Card, Switch } from 'attractions';
   import { showSnackbar } from '$lib/client/snackbar';
   import { session } from '$app/stores';

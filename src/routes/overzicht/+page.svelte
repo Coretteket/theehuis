@@ -1,17 +1,21 @@
 <script context="module" lang="ts">
-  import type { Fetch, QueryOutput } from '$lib/client/trpc';
-  import { protect } from '$lib/util/protect';
-  import trpc from '$lib/client/trpc';
+  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
 
-  export const load = protect(async ({ fetch }) => {
-    const bulletins = await trpc(fetch as Fetch).query('bulletin:list');
-    const housemates = await trpc(fetch as Fetch).query('user:housemates');
+  // import type { Fetch, QueryOutput } from '$lib/client/trpc';
+  // import { protect } from '$lib/util/protect';
+  // import trpc from '$lib/client/trpc';
 
-    return { props: { bulletins, housemates } };
-  });
+  // export const load = protect(async ({ fetch }) => {
+  //   const bulletins = await trpc(fetch as Fetch).query('bulletin:list');
+  //   const housemates = await trpc(fetch as Fetch).query('user:housemates');
+
+  //   return { props: { bulletins, housemates } };
+  // });
 </script>
 
 <script lang="ts">
+  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
   import { Card } from 'attractions';
   import BulletinCollection from './_BulletinCollection.svelte';
   import User from '$lib/components/User.svelte';
