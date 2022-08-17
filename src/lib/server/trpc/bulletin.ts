@@ -13,7 +13,7 @@ export default trpc
         select: {
           id: true,
           updatedAt: true,
-          user: userData,
+          author: userData,
           title: true,
           message: true,
           likedBy: userData,
@@ -28,10 +28,10 @@ export default trpc
     resolve: async ({ ctx, input }) => {
       const likedResponse = await prisma.bulletin.findUnique({
         where: { id: input },
-        select: { userId: true, likedBy: { select: { id: true } } },
+        select: { authorId: true, likedBy: { select: { id: true } } },
       });
 
-      if (likedResponse?.userId === ctx.user?.id) return null;
+      if (likedResponse?.authorId === ctx.user?.id) return null;
 
       const filtered = likedResponse?.likedBy.filter((user) => user.id === ctx.user?.id);
       const like = filtered && filtered.length === 0;
@@ -46,5 +46,21 @@ export default trpc
       });
 
       return { liked: like, ...response };
+    },
+  })
+  .mutation('edit', {
+    input: z.object({
+      id: z.string().cuid(),
+      authorId: z.string().cuid(),
+      text: z.string(),
+    }),
+    resolve: async ({ ctx, input }) => {
+      if (ctx.user?.id !== input.authorId) return null;
+      const response = await prisma.bulletin.update({
+        where: { id: input.id },
+        data: { message: input.text },
+        include: { author: true, likedBy: true },
+      });
+      return response;
     },
   });

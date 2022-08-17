@@ -35,6 +35,7 @@ model User {
   bulletinLikes     Bulletin[]     @relation("bulletinLikes")
   notifications     Notification[]
   notificationLikes Notification[] @relation("notificationLikes")
+  Grocery           Grocery[]
 }
 
 model Bulletin {
@@ -43,8 +44,8 @@ model Bulletin {
   updatedAt DateTime @updatedAt
   house     House    @relation(fields: [houseId], references: [id])
   houseId   String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
   title     String
   message   String   @db.Text()
   likedBy   User[]   @relation("bulletinLikes")
@@ -55,8 +56,8 @@ model Notification {
   createdAt DateTime @default(now())
   house     House    @relation(fields: [houseId], references: [id])
   houseId   String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
   message   String
   likedBy   User[]   @relation("notificationLikes")
 }
@@ -65,9 +66,11 @@ model Grocery {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  house     House    @relation(fields: [houseId], references: [id])
+  houseId   String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
   name      String
-  notes     String
+  notes     String   @db.Text()
   active    Boolean  @default(true)
-  house     House?   @relation(fields: [houseId], references: [id])
-  houseId   String?
 }

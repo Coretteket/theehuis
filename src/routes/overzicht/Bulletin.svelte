@@ -4,6 +4,7 @@
   import { Card, Dialog, Modal } from 'attractions';
   import { writable } from 'svelte/store';
   import BulletinContent from './BulletinContent.svelte';
+  import BulletinModal from './BulletinModal.svelte';
 
   export let bulletin: NonNullable<QueryOutput<'bulletin:list'>>[number];
 
@@ -18,6 +19,6 @@
 
 <Modal bind:open={modalOpen} let:closeCallback>
   <Dialog title={$bulletinStore.title} {closeCallback} constrainWidth>
-    <BulletinContent bulletin={bulletinStore} modal />
+    <BulletinModal bulletin={bulletinStore} />
   </Dialog>
 </Modal>

@@ -3,6 +3,7 @@
 
   import type { QueryOutput } from '$lib/client/trpc';
   import { useConveyer } from '@egjs/svelte-conveyer/src/svelte-conveyer/index';
+  import { Button, Modal, Dialog } from 'attractions';
   import Bulletin from './Bulletin.svelte';
 
   export let bulletins: QueryOutput<'bulletin:list'>;
@@ -10,7 +11,20 @@
   const drag = browser ? useConveyer({ horizontal: true }).ref : () => {};
 
   let grabbing = false;
+
+  let modalOpen = false;
+
+  const newBulletin = () => {};
 </script>
+
+<div class="flex justify-between">
+  <h2 class="mb-3">Bulletin</h2>
+  <Button outline on:click={() => (modalOpen = true)}>Nieuw</Button>
+</div>
+
+<Modal bind:open={modalOpen} let:closeCallback>
+  <Dialog title="Nieuwe bulletin" {closeCallback} constrainWidth />
+</Modal>
 
 {#if bulletins}
   <div

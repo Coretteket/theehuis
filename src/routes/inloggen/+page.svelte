@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TextField, Button } from 'attractions';
+  import { TextField } from 'attractions';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import { loginSchema } from '$lib/client/schema';
@@ -7,18 +7,18 @@
   import { user } from '$lib/client/stores';
   import type { MutationOutput } from '$lib/client/trpc';
   import { goto } from '$app/navigation';
-  import Loading from '$lib/components/Loading.svelte';
+  import Submit from '$lib/components/Submit.svelte';
   import trpc from '$lib/client/trpc';
   import { getRecaptchaToken } from '$lib/util/recaptchaToken';
 
-  let loginLoading = false;
+  let loading = false;
 
   const { form, errors } = createForm({
     onSubmit: async (values) => {
-      loginLoading = true;
+      loading = true;
       const recaptchaToken = await getRecaptchaToken('login');
       const response = await post('/inloggen/api', { ...values, recaptchaToken });
-      loginLoading = false;
+      loading = false;
 
       if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
@@ -48,11 +48,7 @@
 <form class="my-7" use:form>
   <TextField outline label="E-mailadres" type="email" name="email" error={$errors.email} />
   <TextField outline label="Wachtwoord" type="password" name="password" error={$errors.password} />
-  {#if loginLoading}
-    <div class="ml-auto mr-5 w-min"><Loading /></div>
-  {:else}
-    <Button outline type="submit" class="ml-auto">Log in</Button>
-  {/if}
+  <Submit {loading} name="Log in" />
 </form>
 
 <style>

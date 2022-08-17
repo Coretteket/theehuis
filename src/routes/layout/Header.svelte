@@ -16,7 +16,7 @@
         <span class="ml-4">Theehuis</span>
       </h1>
       <h1 class="sm:!hidden">
-        <span>{$currentRoute?.title ?? 'Theehuis'}</span>
+        <span>{$currentRoute?.title ?? $currentRoute?.name}</span>
       </h1>
     </div>
     <div class="right">

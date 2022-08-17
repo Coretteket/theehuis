@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { QueryOutput } from '$lib/client/trpc';
-  import trpc from '$lib/client/trpc';
   import Likes from '$lib/components/Likes.svelte';
 
   import User from '$lib/components/User.svelte';
@@ -8,57 +7,38 @@
   import { fromNow } from '$lib/util/fromNow';
   import { Button } from 'attractions';
   import Launch from 'carbon-icons-svelte/lib/Launch.svelte';
-  import { user } from '$lib/client/stores';
   import type { Writable } from 'svelte/store';
 
   export let bulletin: Writable<NonNullable<QueryOutput<'bulletin:list'>>[number]>;
-  export let modal: boolean = false;
   export let launch = () => {};
-
-  $: disabled = $bulletin.user.id === $user?.id;
-  $: liked = $bulletin.likedBy.filter((liker) => liker.id === $user?.id).length > 0;
-  $: editable = modal && $bulletin.user.id === $user?.id;
-
-  const like = async () => {
-    liked = !liked;
-    const response = await trpc().mutation('bulletin:like', $bulletin.id);
-    $bulletin.likedBy = response?.likedBy ?? $bulletin.likedBy;
-    liked = response?.liked ?? liked;
-  };
 </script>
 
 <div>
-  {#if !modal}
-    <div class="flex justify-between items-center -mt-2 mb-1">
-      <User name={$bulletin.user.name} gravatar={$bulletin.user.gravatar} showName />
+  <div class="flex justify-between items-center -mt-2 mb-1">
+    <User name={$bulletin.author.name} gravatar={$bulletin.author.gravatar} showName />
 
-      <Button on:click={launch} round>
-        <Launch class="inline-block text-gray-600" size={20} />
-      </Button>
-    </div>
+    <Button on:click={launch} round>
+      <Launch class="inline-block text-gray-600" size={20} />
+    </Button>
+  </div>
 
-    <h3 class:constrain={!modal} class="text-lg font-medium">
-      {$bulletin.title}
-    </h3>
-  {/if}
+  <h3 class="constrain text-lg font-medium">
+    {$bulletin.title}
+  </h3>
 
   <p class="text-sm text-gray-600 -mt-1 mb-3">
     {fromNow($bulletin.updatedAt)}
-    {#if modal}
-      &#8211; door {$bulletin.user.name}
-    {/if}
   </p>
 
-  <div class:message={modal}>
-    <p class:constrain={!modal}>
+  <div>
+    <p class="constrain">
       {$bulletin.message}
     </p>
   </div>
 </div>
 
-<div class={editable ? 'flex justify-between' : '-mb-2'}>
-  {#if editable}<Button outline>Edit</Button>{/if}
-  <Likes likedBy={$bulletin.likedBy} {like} {liked} {disabled} />
+<div class="-mb-2">
+  <Likes data={bulletin} />
 </div>
 
 <style>

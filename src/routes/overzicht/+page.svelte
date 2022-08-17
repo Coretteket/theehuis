@@ -1,14 +1,12 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Card } from 'attractions';
+  import { Button, Card } from 'attractions';
   import BulletinCollection from './BulletinCollection.svelte';
   import User from '$lib/components/User.svelte';
 
   export let data: PageData;
   $: ({ bulletins, housemates } = data);
 </script>
-
-<h2 class="mb-3">Bulletin</h2>
 
 <BulletinCollection {bulletins} />
 
