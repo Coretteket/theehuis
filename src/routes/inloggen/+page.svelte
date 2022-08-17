@@ -4,12 +4,12 @@
   import { validator } from '@felte/validator-zod';
   import { loginSchema } from '$lib/client/schema';
   import { post } from '$lib/util/post';
-  import { session } from '$app/stores';
+  import { user } from '$lib/client/stores';
   import type { MutationOutput } from '$lib/client/trpc';
   import { goto } from '$app/navigation';
   import Loading from '$lib/components/Loading.svelte';
   import trpc from '$lib/client/trpc';
-  import { getRecaptchaToken } from '$lib/util/getRecaptchaToken';
+  import { getRecaptchaToken } from '$lib/util/recaptchaToken';
 
   let loginLoading = false;
 
@@ -23,8 +23,8 @@
       if (response.ok) {
         const data: MutationOutput<'auth:login'> = await response.json();
         if (data.success) {
-          const user = await trpc().query('user:get');
-          $session.user = { ...$session.user, ...user };
+          const userResponse = await trpc().query('user:get');
+          user.set(userResponse);
           goto('/overzicht');
         } else if (data.error) {
           throw Error(data.error);

@@ -1,7 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = ({ session }) => {
-  if (session.user) throw redirect(307, '/overzicht');
+export const load: PageLoad = async ({ parent }) => {
+  const { user } = await parent();
+  if (user) throw redirect(307, '/overzicht');
   throw redirect(307, '/inloggen');
 };

@@ -1,8 +1,7 @@
 <script lang="ts">
   import { afterNavigate, beforeNavigate } from '$app/navigation';
-
   import { currentRoute } from '$lib/client/routes';
-  import { loading, loggedIn } from '$lib/client/stores';
+  import { loading, user } from '$lib/client/stores';
   import Header from './layout/Header.svelte';
   import Menu from './layout/Menu.svelte';
   import Loading from '$lib/components/Loading.svelte';
@@ -10,9 +9,12 @@
   import { onMount } from 'svelte';
   import { browser } from '$app/env';
   import { PUBLIC_RECAPTCHA_SITE_KEY } from '$env/static/public';
+  import { page } from '$app/stores';
 
   beforeNavigate(() => loading.set(true));
   afterNavigate(() => loading.set(false));
+
+  $: $user = $page.data.user;
 
   onMount(() => {
     if (browser) {
@@ -30,12 +32,12 @@
 
 <Header />
 <main>
-  {#if $loggedIn}
+  {#if $user}
     <nav>
       <Menu />
     </nav>
   {/if}
-  <section class:loggedIn={$loggedIn}>
+  <section class:loggedIn={$user}>
     {#if $loading}
       <div class="my-12 mx-auto w-min">
         <Loading />

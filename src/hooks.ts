@@ -1,6 +1,6 @@
 import { createContext, router } from '$lib/server/trpc';
 import { createTRPCHandle } from 'trpc-sveltekit';
-import type { GetSession, Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit';
 import { parse } from 'cookie';
 import { JWT_SECRET } from '$env/static/private';
 import jwt from 'jsonwebtoken';
@@ -37,5 +37,3 @@ const _handle: Handle = async ({ event, resolve }) => {
 };
 
 export const handle = sequence(tRPCHandle, _handle);
-
-export const getSession: GetSession = ({ locals }) => locals;

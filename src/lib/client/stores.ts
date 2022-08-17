@@ -1,6 +1,12 @@
 import { derived, writable } from 'svelte/store';
-import { session } from '$app/stores';
+import type { QueryOutput } from './trpc';
 
 export const loading = writable(false);
 
-export const loggedIn = derived(session, ($session) => !!$session.user);
+// export const session = writable<{ user: QueryOutput<'user:get'> | null }>({ user: null });
+
+export const user = writable<QueryOutput<'user:get'> | null>(null);
+
+export const session = derived(user, ($user) => ({ user: $user }));
+
+export const loggedIn = derived(user, ($user) => !!$user);

@@ -1,17 +1,17 @@
 <script lang="ts">
   import { Card, Switch } from 'attractions';
   import { showSnackbar } from '$lib/client/snackbar';
-  import { session } from '$app/stores';
+  import { user } from '$lib/client/stores';
   import type { PageData } from './$types';
   import trpc from '$lib/client/trpc';
 
   export let data: PageData;
 
-  let gravatarValue = !!$session.user?.gravatar;
+  let gravatarValue = !!$user?.gravatar;
 
   const handleGravatarChange = async ({ detail }: CustomEvent) => {
     const { gravatar } = await trpc().mutation('settings:gravatar', !!detail.value);
-    if ($session.user) $session.user.gravatar = gravatar;
+    if ($user) $user.gravatar = gravatar;
     if (gravatar) $showSnackbar({ text: 'Gravatar succesvol ingeschakeld.' });
     else $showSnackbar({ text: 'Gravatar uitgeschakeld.' });
   };

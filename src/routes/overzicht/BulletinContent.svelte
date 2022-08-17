@@ -8,16 +8,16 @@
   import { fromNow } from '$lib/util/fromNow';
   import { Button } from 'attractions';
   import Launch from 'carbon-icons-svelte/lib/Launch.svelte';
-  import { session } from '$app/stores';
+  import { user } from '$lib/client/stores';
   import type { Writable } from 'svelte/store';
 
   export let bulletin: Writable<NonNullable<QueryOutput<'bulletin:list'>>[number]>;
   export let modal: boolean = false;
   export let launch = () => {};
 
-  $: disabled = $bulletin.user.id === $session.user?.id;
-  $: liked = $bulletin.likedBy.filter((user) => user.id === $session.user?.id).length > 0;
-  $: editable = modal && $bulletin.user.id === $session.user?.id;
+  $: disabled = $bulletin.user.id === $user?.id;
+  $: liked = $bulletin.likedBy.filter((liker) => liker.id === $user?.id).length > 0;
+  $: editable = modal && $bulletin.user.id === $user?.id;
 
   const like = async () => {
     liked = !liked;

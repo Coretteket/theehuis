@@ -1,5 +1,5 @@
 import preprocess from 'svelte-preprocess';
-import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-auto';
 import makeAttractionsImporter from 'attractions/importer.js';
 
 /** @type {import('@sveltejs/kit').Config} */

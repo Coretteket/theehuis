@@ -7,7 +7,7 @@
   import { showSnackbar } from '$lib/client/snackbar';
   import Loading from '$lib/components/Loading.svelte';
   import { goto } from '$app/navigation';
-  import { getRecaptchaToken } from '$lib/util/getRecaptchaToken';
+  import { getRecaptchaToken } from '$lib/util/recaptchaToken';
 
   let registerLoading = false;
 
