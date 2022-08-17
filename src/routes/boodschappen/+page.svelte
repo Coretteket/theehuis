@@ -5,7 +5,7 @@
 </script>
 
 <ul>
-  {#each data?.listItems as item}
+  {#each data.listItems as item}
     <li class:archived={!item.active}>
       {item.name}
       {#if item.notes.length > 0}, {item.notes} {/if}

@@ -17,11 +17,11 @@
   };
 </script>
 
-{#if data?.adminUsersList}
+{#if data.adminUsersList}
   <h2 class="text-lg font-medium mb-2">Admin</h2>
   <Card class="mb-8">
     <ul>
-      {#each data?.adminUsersList as user}
+      {#each data.adminUsersList as user}
         <li>
           <img
             src={user.gravatar ?? 'https://www.gravatar.com/avatar/?d=mp'}
