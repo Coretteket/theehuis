@@ -3,7 +3,7 @@
 
   import type { QueryOutput } from '$lib/client/trpc';
   import { useConveyer } from '@egjs/svelte-conveyer/src/svelte-conveyer/index';
-  import Bulletin from './_Bulletin.svelte';
+  import Bulletin from './Bulletin.svelte';
 
   export let bulletins: QueryOutput<'bulletin:list'>;
 

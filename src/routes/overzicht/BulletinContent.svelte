@@ -49,7 +49,11 @@
     {/if}
   </p>
 
-  <div class:message={modal}><p class:constrain={!modal}>{$bulletin.message}</p></div>
+  <div class:message={modal}>
+    <p class:constrain={!modal}>
+      {$bulletin.message}
+    </p>
+  </div>
 </div>
 
 <div class={editable ? 'flex justify-between' : '-mb-2'}>

@@ -3,7 +3,7 @@
 
   import { Card, Dialog, Modal } from 'attractions';
   import { writable } from 'svelte/store';
-  import BulletinContent from './_BulletinContent.svelte';
+  import BulletinContent from './BulletinContent.svelte';
 
   export let bulletin: NonNullable<QueryOutput<'bulletin:list'>>[number];
 

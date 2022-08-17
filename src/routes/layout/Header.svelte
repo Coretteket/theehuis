@@ -1,10 +1,10 @@
 <script lang="ts">
   import Cafe from 'carbon-icons-svelte/lib/Cafe.svelte';
   import { currentRoute } from '$lib/client/routes';
-  import Profile from './_Profile.svelte';
+  import Profile from './Profile.svelte';
   import { session } from '$app/stores';
   import { Button } from 'attractions';
-  import Snackbar from './_Snackbar.svelte';
+  import Snackbar from './Snackbar.svelte';
 </script>
 
 <header>
