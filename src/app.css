@@ -54,12 +54,16 @@ a {
   color: rgb(71, 71, 163);
 }
 
-.btn:is(button, a):not(.\!p-0, .wide) {
+.btn:is(button, a):not(.\!p-0, .wide, .round) {
   padding-block: 0.625em !important;
 }
 
 .btn:focus:not([disabled]):not(:hover) {
   background: none !important;
+}
+
+.btn[disabled] {
+  cursor: not-allowed !important;
 }
 
 .modal-overlay .dialog {

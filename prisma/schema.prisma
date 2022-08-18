@@ -49,6 +49,7 @@ model Bulletin {
   title     String
   message   String   @db.Text()
   likedBy   User[]   @relation("bulletinLikes")
+  archive   Boolean  @default(false)
 }
 
 model Notification {
@@ -72,5 +73,5 @@ model Grocery {
   authorId  String
   name      String
   notes     String   @db.Text()
-  active    Boolean  @default(true)
+  archive   Boolean  @default(false)
 }

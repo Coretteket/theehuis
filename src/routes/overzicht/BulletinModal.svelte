@@ -9,24 +9,40 @@
   import { createForm } from 'felte';
   import Submit from '$lib/components/Submit.svelte';
   import trpc from '$lib/client/trpc';
+  import { invalidate } from '$app/navigation';
 
   export let bulletin: Writable<NonNullable<QueryOutput<'bulletin:list'>>[number]>;
 
   $: editable = $bulletin.author.id === $user?.id;
 
   let editing = false;
+  let confirm = false;
+
+  $: if (confirm) {
+    setTimeout(() => {
+      confirm = false;
+    }, 10e3);
+  }
 
   const { form } = createForm({
     onSubmit: async (values) => {
       const response = await trpc().mutation('bulletin:edit', {
         id: $bulletin.id,
         authorId: $bulletin.author.id,
-        text: values.text,
+        message: values.message,
       });
       $bulletin = response ?? $bulletin;
       editing = false;
     },
   });
+
+  const archive = async () => {
+    await trpc().mutation('bulletin:archive', {
+      id: $bulletin.id,
+      authorId: $bulletin.author.id,
+    });
+    invalidate();
+  };
 </script>
 
 <div>
@@ -42,7 +58,7 @@
       </p>
     {:else}
       <form use:form>
-        <TextField value={$bulletin.message} multiline name="text" />
+        <TextField value={$bulletin.message} multiline name="message" />
         <div class="flex gap-3 mt-4">
           <Button outline on:click={() => (editing = false)}>Terug</Button>
           <Button outline type="submit">Opslaan</Button>
@@ -53,33 +69,19 @@
 </div>
 
 {#if !editing}
-  <div class={editable ? 'flex justify-between mt-4' : '-mb-2'}>
-    {#if editable}<Button outline on:click={() => (editing = true)}>Edit</Button>{/if}
+  <div class={editable ? 'flex justify-between mt-2' : '-mb-2'}>
+    {#if editable}
+      <div class="flex gap-3  my-2">
+        <Button outline on:click={() => (editing = true)}>Bewerken</Button>
+        {#if !confirm}<Button outline danger on:click={() => (confirm = true)}>Archiveren</Button>
+        {:else}<Button danger on:click={archive}>Zeker?</Button>{/if}
+      </div>
+    {/if}
     <Likes data={bulletin} />
   </div>
 {/if}
 
 <style>
-  h3.constrain {
-    max-width: 100%;
-    display: inline-block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  h3:not(.constrain) {
-    line-height: 1;
-    margin-bottom: 0.5em;
-  }
-
-  p.constrain {
-    -webkit-line-clamp: 3;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
   div.message {
     max-height: 50vh;
     overflow-y: auto;
