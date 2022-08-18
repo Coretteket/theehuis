@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
   import { useMediaQuery } from '$lib/util/mediaQuery';
   import { routes, isRoute } from '$lib/client/routes';
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { TextField, Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
+  import TextField from 'attractions/text-field/text-field.svelte';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import { registerSchema } from '$lib/client/schema';

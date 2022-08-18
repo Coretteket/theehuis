@@ -3,7 +3,7 @@
   import { currentRoute } from '$lib/client/routes';
   import Profile from './Profile.svelte';
   import { user } from '$lib/client/stores';
-  import { Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
   import Snackbar from './Snackbar.svelte';
 </script>
 

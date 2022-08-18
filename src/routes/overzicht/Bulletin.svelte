@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { QueryOutput } from '$lib/client/trpc';
-
-  import { Card, Dialog, Modal } from 'attractions';
+  import Card from 'attractions/card/card.svelte';
+  import Dialog from 'attractions/dialog/dialog.svelte';
+  import Modal from 'attractions/modal/modal.svelte';
   import { writable } from 'svelte/store';
   import BulletinContent from './BulletinContent.svelte';
   import BulletinModal from './BulletinModal.svelte';

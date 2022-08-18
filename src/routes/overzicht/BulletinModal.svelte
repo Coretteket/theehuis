@@ -2,7 +2,8 @@
   import type { QueryOutput } from '$lib/client/trpc';
   import Likes from '$lib/components/Likes.svelte';
   import { fromNow } from '$lib/util/fromNow';
-  import { Button, TextField } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
+  import TextField from 'attractions/text-field/text-field.svelte';
   import { user } from '$lib/client/stores';
   import type { Writable } from 'svelte/store';
   import { createForm } from 'felte';

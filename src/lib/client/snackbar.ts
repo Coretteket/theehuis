@@ -1,5 +1,5 @@
 import { derived, writable } from 'svelte/store';
-import type { SnackbarContainer } from 'attractions';
+import type SnackbarContainer from 'attractions/snackbar/snackbar-container.svelte';
 
 export const snackbar = writable<SnackbarContainer>();
 

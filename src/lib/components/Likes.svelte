@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
   import { user } from '$lib/client/stores';
   import User from './User.svelte';
   import FavoriteFilled from 'carbon-icons-svelte/lib/FavoriteFilled.svelte';

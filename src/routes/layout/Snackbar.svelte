@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SnackbarContainer } from 'attractions';
+  import SnackbarContainer from 'attractions/snackbar/snackbar-container.svelte';
   import { snackbar } from '$lib/client/snackbar';
 
   let snackbarContainer: SnackbarContainer;

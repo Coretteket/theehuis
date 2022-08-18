@@ -1,7 +1,9 @@
 <script lang="ts">
   import Data from 'carbon-icons-svelte/lib/Data_1.svelte';
   import Logout from 'carbon-icons-svelte/lib/Logout.svelte';
-  import { Button, Dropdown, DropdownShell } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
+  import Dropdown from 'attractions/dropdown/dropdown.svelte';
+  import DropdownShell from 'attractions/dropdown/dropdown-shell.svelte';
   import { goto } from '$app/navigation';
   import { user } from '$lib/client/stores';
   import { post } from '$lib/util/post';

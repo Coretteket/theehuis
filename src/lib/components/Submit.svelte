@@ -1,6 +1,7 @@
 <script lang="ts">
   import Loading from './Loading.svelte';
-  import { Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
+
   export let loading: boolean;
   export let name = 'Opslaan';
 </script>

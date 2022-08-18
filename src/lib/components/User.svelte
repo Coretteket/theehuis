@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Popover } from 'attractions';
+  import Popover from 'attractions/popover/popover.svelte';
 
   import { fade } from 'svelte/transition';
 

@@ -5,7 +5,7 @@
   import User from '$lib/components/User.svelte';
 
   import { fromNow } from '$lib/util/fromNow';
-  import { Button } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
   import Launch from 'carbon-icons-svelte/lib/Launch.svelte';
   import type { Writable } from 'svelte/store';
 

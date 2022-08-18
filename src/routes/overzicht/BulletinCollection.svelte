@@ -3,7 +3,9 @@
 
   import type { QueryOutput } from '$lib/client/trpc';
   import { useConveyer } from '@egjs/svelte-conveyer/src/svelte-conveyer/index';
-  import { Button, Modal, Dialog } from 'attractions';
+  import Button from 'attractions/button/button.svelte';
+  import Dialog from 'attractions/dialog/dialog.svelte';
+  import Modal from 'attractions/modal/modal.svelte';
   import Bulletin from './Bulletin.svelte';
 
   export let bulletins: QueryOutput<'bulletin:list'>;

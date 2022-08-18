@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Card, Switch } from 'attractions';
+  import Card from 'attractions/card/card.svelte';
+  import Switch from 'attractions/switch/switch.svelte';
   import { showSnackbar } from '$lib/client/snackbar';
   import { user } from '$lib/client/stores';
   import type { PageData } from './$types';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TextField } from 'attractions';
+  import TextField from 'attractions/text-field/text-field.svelte';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import { loginSchema } from '$lib/client/schema';

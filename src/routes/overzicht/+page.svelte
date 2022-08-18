@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Button, Card } from 'attractions';
+  import Card from 'attractions/card/card.svelte';
   import BulletinCollection from './BulletinCollection.svelte';
   import User from '$lib/components/User.svelte';
 
