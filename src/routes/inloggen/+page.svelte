@@ -51,6 +51,8 @@
   <Submit {loading} name="Log in" />
 </form>
 
+<footer class="text-gray-400 text-sm mt-6">Theehuis maakt gebruik van reCAPTCHA voor het afvangen van spam.</footer>
+
 <style>
   form {
     max-width: 500px;

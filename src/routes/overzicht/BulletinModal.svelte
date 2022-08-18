@@ -7,9 +7,9 @@
   import { user } from '$lib/client/stores';
   import type { Writable } from 'svelte/store';
   import { createForm } from 'felte';
-  import Submit from '$lib/components/Submit.svelte';
   import trpc from '$lib/client/trpc';
   import { invalidate } from '$app/navigation';
+  import Loading from '$lib/components/Loading.svelte';
 
   export let bulletin: Writable<NonNullable<QueryOutput<'bulletin:list'>>[number]>;
 
@@ -17,6 +17,7 @@
 
   let editing = false;
   let confirm = false;
+  let loading = false;
 
   $: if (confirm) {
     setTimeout(() => {
@@ -26,6 +27,7 @@
 
   const { form } = createForm({
     onSubmit: async (values) => {
+      loading = true;
       const response = await trpc().mutation('bulletin:edit', {
         id: $bulletin.id,
         authorId: $bulletin.author.id,
@@ -33,52 +35,49 @@
       });
       $bulletin = response ?? $bulletin;
       editing = false;
+      loading = false;
     },
   });
 
   const archive = async () => {
+    loading = true;
     await trpc().mutation('bulletin:archive', {
       id: $bulletin.id,
       authorId: $bulletin.author.id,
     });
-    invalidate();
+    invalidate((href) => href.includes('bulletin:list'));
   };
 </script>
 
-<div>
-  <p class="text-sm text-gray-600 -mt-1 mb-3">
-    {fromNow($bulletin.updatedAt)}
-    &#8211; door {$bulletin.author.name}
-  </p>
-
-  <div class="message">
-    {#if !editing}
-      <p class="mb-0">
-        {$bulletin.message}
-      </p>
-    {:else}
-      <form use:form>
-        <TextField value={$bulletin.message} multiline name="message" />
-        <div class="flex gap-3 mt-4">
-          <Button outline on:click={() => (editing = false)}>Terug</Button>
-          <Button outline type="submit">Opslaan</Button>
-        </div>
-      </form>
-    {/if}
-  </div>
-</div>
+<p class="text-sm text-gray-600 -mt-1 mb-3">
+  {fromNow($bulletin.updatedAt)}
+  &#8211; door {$bulletin.author.name}
+</p>
 
 {#if !editing}
-  <div class={editable ? 'flex justify-between mt-2' : '-mb-2'}>
-    {#if editable}
-      <div class="flex gap-3  my-2">
-        <Button outline on:click={() => (editing = true)}>Bewerken</Button>
-        {#if !confirm}<Button outline danger on:click={() => (confirm = true)}>Archiveren</Button>
-        {:else}<Button danger on:click={archive}>Zeker?</Button>{/if}
-      </div>
-    {/if}
-    <Likes data={bulletin} />
+  <div class="message">
+    <p class="mb-2">
+      {$bulletin.message}
+    </p>
   </div>
+
+  {#if editable}
+    <div class="flex flex-wrap gap-3 my-2">
+      <Button outline on:click={() => (editing = true)}>Bewerken</Button>
+      {#if !confirm}<Button outline danger on:click={() => (confirm = true)}>Archiveren</Button>
+      {:else if !loading}<Button danger on:click={archive}>Zeker?</Button>
+      {:else}<Loading class="ml-4" />{/if}
+    </div>
+  {/if}
+{:else}
+  <form use:form>
+    <TextField value={$bulletin.message} multiline name="message" />
+    <div class="flex gap-3 mt-4">
+      <Button outline on:click={() => (editing = false)}>Terug</Button>
+      {#if !loading}<Button outline type="submit">Opslaan</Button>
+      {:else}<Loading class="ml-4" />{/if}
+    </div>
+  </form>
 {/if}
 
 <style>

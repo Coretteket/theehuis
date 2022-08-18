@@ -18,7 +18,7 @@
   <BulletinContent bulletin={bulletinStore} launch={() => (modalOpen = true)} />
 </Card>
 
-<Modal bind:open={modalOpen} let:closeCallback>
+<Modal bind:open={modalOpen} class="cursor-default" let:closeCallback>
   <Dialog title={$bulletinStore.title} {closeCallback} constrainWidth>
     <BulletinModal bulletin={bulletinStore} />
   </Dialog>

@@ -1,7 +1,9 @@
-<div class="sk-chase">
-  {#each Array(6).fill(0) as _}
-    <div class="sk-chase-dot" />
-  {/each}
+<div {...$$restProps}>
+  <div class="sk-chase">
+    {#each Array(6).fill(0) as _}
+      <div class="sk-chase-dot" />
+    {/each}
+  </div>
 </div>
 
 <style lang="scss">
